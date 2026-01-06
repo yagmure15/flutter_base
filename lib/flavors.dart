@@ -4,6 +4,23 @@ import 'env/env_dev.dart';
 import 'env/env_prod.dart';
 import 'env/env_staging.dart';
 
+abstract class Env {
+  /// Development environment
+  ///
+  /// value as String: [dev]
+  static const dev = 'dev';
+
+  /// Staging environment
+  ///
+  /// value as String: [staging]
+  static const staging = 'staging';
+
+  /// Production environment
+  ///
+  /// value as String: [prod]
+  static const prod = 'prod';
+}
+
 abstract class AppFlavor {
   String get title;
   String get baseUrl;
@@ -12,7 +29,7 @@ abstract class AppFlavor {
 }
 
 @Singleton(as: AppFlavor)
-@Environment('dev')
+@Environment(Env.dev)
 class DevFlavor implements AppFlavor {
   @override
   String get title => 'Flutter Base Dev';
@@ -28,7 +45,7 @@ class DevFlavor implements AppFlavor {
 }
 
 @Singleton(as: AppFlavor)
-@Environment('staging')
+@Environment(Env.staging)
 class StagingFlavor implements AppFlavor {
   @override
   String get title => 'Flutter Base Staging';
@@ -44,7 +61,7 @@ class StagingFlavor implements AppFlavor {
 }
 
 @Singleton(as: AppFlavor)
-@Environment('prod')
+@Environment(Env.prod)
 class ProdFlavor implements AppFlavor {
   @override
   String get title => 'Flutter Base';

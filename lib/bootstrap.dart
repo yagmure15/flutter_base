@@ -9,10 +9,10 @@ Future<void> bootstrap({
   required FutureOr<Widget> Function() builder,
   required String environment,
 }) async {
-  // 1. Setup DI
+  /// Setup DI
   configureDependencies(environment: environment);
 
-  // Setup Error Handling
+  /// Setup Error Handling
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
