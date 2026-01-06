@@ -1,0 +1,21 @@
+android {
+    flavorDimensions += "flavor"
+
+    productFlavors {
+        dev {
+            dimension "flavor"
+            applicationId "com.example.flutter_base.dev"
+            resValue "string", "app_name", "Flutter Base Dev"
+        }
+        staging {
+            dimension "flavor"
+            applicationId "com.example.flutter_base.staging"
+            resValue "string", "app_name", "Flutter Base Staging"
+        }
+        prod {
+            dimension "flavor"
+            applicationId "com.example.flutter_base"
+            resValue "string", "app_name", "Flutter Base"
+        }
+    }
+}

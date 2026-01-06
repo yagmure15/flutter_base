@@ -1,0 +1,55 @@
+name: flutter_base
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  # Güvenli ortam değişkenleri için
+  envied: ^0.5.4
+  flutter:
+    sdk: flutter
+  get_it: ^8.0.0
+  injectable: ^2.5.0
+
+dev_dependencies:
+  # Kod üretimi için
+  build_runner: ^2.4.8
+  envied_generator: ^0.5.4
+  flutter_flavorizr: ^2.2.3
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^2.6.0
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor"
+    ios:
+      bundleId: "com.example.flutter_base"
+  flavors:
+    dev:
+      app:
+        name: "Flutter Base Dev"
+      android:
+        applicationId: "com.example.flutter_base.dev"
+      ios:
+        bundleId: "com.example.flutter_base.dev"
+    staging:
+      app:
+        name: "Flutter Base Staging"
+      android:
+        applicationId: "com.example.flutter_base.staging"
+      ios:
+        bundleId: "com.example.flutter_base.staging"
+    prod:
+      app:
+        name: "Flutter Base"
+      android:
+        applicationId: "com.example.flutter_base"
+      ios:
+        bundleId: "com.example.flutter_base"
+
