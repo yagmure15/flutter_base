@@ -4,8 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'config/app_flavor.dart';
 import 'core/dependency/di.dart';
+import 'core/router/app_router.dart';
 import 'core/translations/strings.g.dart';
-import 'features/auth/presentation/pages/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,22 +13,26 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flavor = getIt<AppFlavor>();
+    final appRouter = getIt<AppRouter>();
 
     return TranslationProvider(
       child: Builder(
         builder: (context) {
-          return MaterialApp(
+          return MaterialApp.router(
             title: flavor.title,
             locale: TranslationProvider.of(context).flutterLocale, // use provider
             supportedLocales: AppLocaleUtils.supportedLocales,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
             debugShowCheckedModeBanner: kDebugMode,
             theme: ThemeData(primarySwatch: Colors.blue),
-            home: _flavorBanner(
-              child: const HomePage(),
-              show: kDebugMode || flavor.enableLogs, // Show banner in debug or if enabled in flavor
-              flavorName: flavor.name,
-            ),
+            routerConfig: appRouter.config(),
+            builder: (context, child) {
+              return _flavorBanner(
+                child: child ?? const SizedBox(),
+                show: kDebugMode || flavor.enableLogs,
+                flavorName: flavor.name,
+              );
+            },
           );
         },
       ),

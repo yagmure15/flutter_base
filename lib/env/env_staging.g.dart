@@ -8,6 +8,7 @@ part of 'env_staging.dart';
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
+// generated_from: .env.staging
 final class _EnvStaging {
   static const String key = 'value';
 
