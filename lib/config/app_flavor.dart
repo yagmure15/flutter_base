@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 
-import 'env/env_dev.dart';
-import 'env/env_prod.dart';
-import 'env/env_staging.dart';
+import '../env/env_dev.dart';
+import '../env/env_prod.dart';
+import '../env/env_staging.dart';
 
 abstract class Env {
   /// Development environment
@@ -28,6 +28,9 @@ abstract class AppFlavor {
   String get name;
 }
 
+/// Development flavor
+///
+/// @Environment(Env.dev)
 @Singleton(as: AppFlavor)
 @Environment(Env.dev)
 class DevFlavor implements AppFlavor {
@@ -44,6 +47,9 @@ class DevFlavor implements AppFlavor {
   String get name => 'DEV';
 }
 
+/// Staging flavor
+///
+/// @Environment(Env.staging)
 @Singleton(as: AppFlavor)
 @Environment(Env.staging)
 class StagingFlavor implements AppFlavor {
@@ -60,6 +66,9 @@ class StagingFlavor implements AppFlavor {
   String get name => 'STAGING';
 }
 
+/// Production flavor
+///
+/// @Environment(Env.prod)
 @Singleton(as: AppFlavor)
 @Environment(Env.prod)
 class ProdFlavor implements AppFlavor {

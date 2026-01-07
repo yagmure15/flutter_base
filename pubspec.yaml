@@ -11,8 +11,12 @@ dependencies:
   envied: ^0.5.4
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   get_it: ^8.0.0
   injectable: ^2.5.0
+  slang: ^4.11.1
+  slang_flutter: ^4.11.0
 
 dev_dependencies:
   # Kod üretimi için
@@ -23,6 +27,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   injectable_generator: ^2.6.0
+  slang_build_runner: ^4.11.0
 
 flavorizr:
   app:

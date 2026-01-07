@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../core/dependency/di.dart';
-import '../flavors.dart';
+import '../../../../config/app_flavor.dart';
+import '../../../../core/dependency/di.dart';
+import '../../../../core/translations/strings.g.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Hello ${flavor.title}',
+              t.home.hello(name: flavor.title),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 16),

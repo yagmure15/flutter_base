@@ -10,6 +10,6 @@ final getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: true,
 )
-void configureDependencies({required String environment}) {
+Future<void> configureDependencies({required String environment}) async {
   getIt.init(environment: environment);
 }

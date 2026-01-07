@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../flavors.dart';
+import '../../config/app_flavor.dart';
 
 @module
 abstract class AppModule {
