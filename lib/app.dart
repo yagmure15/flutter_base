@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,7 +25,9 @@ class App extends StatelessWidget {
             supportedLocales: AppLocaleUtils.supportedLocales,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
             debugShowCheckedModeBanner: kDebugMode,
-            theme: ThemeData(primarySwatch: Colors.blue),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.system,
             routerConfig: appRouter.config(),
             builder: (context, child) {
               return _flavorBanner(

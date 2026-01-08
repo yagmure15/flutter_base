@@ -18,7 +18,7 @@ Future<void> bootstrap({required FutureOr<Widget> Function() builder, required S
       await configureDependencies(environment: environment);
 
       /// Setup Locale
-      await LocaleSettings.useDeviceLocale();
+      LocaleSettings.useDeviceLocale();
 
       /// Initializes Bloc observer.
       Bloc.observer = AppBlocObserver();

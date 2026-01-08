@@ -8,7 +8,6 @@ part of 'env_dev.dart';
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// generated_from: .env.dev
 final class _EnvDev {
   static const String key = 'value';
 

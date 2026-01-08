@@ -1,0 +1,41 @@
+name: flutter_base_workspace
+
+packages:
+  - .
+  - packages/*
+
+command:
+  bootstrap:
+    # Tüm paketler için pub get çalıştırılsın
+    runPubGetInParallel: false
+    
+scripts:
+  analyze:
+    run: |
+      melos exec -c 1 -- \
+        dart analyze .
+    description: "Tüm paketlerde analiz çalıştırır."
+
+  format:
+    run: |
+      melos exec -c 1 -- \
+        dart format .
+    description: "Tüm paketleri formatlar."
+
+  test:
+    run: |
+      melos exec -c 1 --dir-exists="test" -- \
+        flutter test
+    description: "Testleri çalıştırır."
+
+  gen:
+    run: |
+      melos exec -c 1 --depends-on="build_runner" -- \
+        dart run build_runner build --delete-conflicting-outputs
+    description: "build_runner kullanan paketlerde kod üretimi yapar."
+
+  clean:
+    run: |
+      melos exec -- \
+        flutter clean
+    description: "Tüm paketleri temizler."
