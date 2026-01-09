@@ -1,7 +1,7 @@
 name: flutter_base_workspace
 
 packages:
-  - .
+  - apps/*
   - packages/*
 
 command:
@@ -22,13 +22,13 @@ scripts:
         dart format .
     description: "Tüm paketleri formatlar."
 
-  test:
+  test:select:
     run: |
       melos exec -c 1 --dir-exists="test" -- \
         flutter test
-    description: "Testleri çalıştırır."
+    description: "Testleri çalıştırır (sadece test klasörü olan paketlerde)."
 
-  gen:
+  gen:build:
     run: |
       melos exec -c 1 --depends-on="build_runner" -- \
         dart run build_runner build --delete-conflicting-outputs
@@ -39,3 +39,7 @@ scripts:
       melos exec -- \
         flutter clean
     description: "Tüm paketleri temizler."
+    
+  postbootstrap:
+    run: dart pub global activate flutter_gen
+    description: "Global araçları kurar."
