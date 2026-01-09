@@ -6,7 +6,6 @@ import 'package:flutter_base_core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/dependency/di.dart';
-import 'core/translations/strings.g.dart';
 
 Future<void> bootstrap({required FutureOr<Widget> Function() builder, required String environment}) async {
   await runZonedGuarded(
@@ -16,9 +15,6 @@ Future<void> bootstrap({required FutureOr<Widget> Function() builder, required S
 
       /// Setup DI
       await configureDependencies(environment: environment);
-
-      /// Setup Locale
-      LocaleSettings.useDeviceLocale();
 
       /// Initializes Bloc observer.
       Bloc.observer = AppBlocObserver();

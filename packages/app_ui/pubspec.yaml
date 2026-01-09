@@ -34,3 +34,5 @@ flutter:
 flutter_gen:
   output: lib/src/generated/
   line_length: 80
+  integrations:
+    flutter_svg: true
