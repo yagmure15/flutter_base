@@ -1,4 +1,5 @@
 import 'package:design_system/design_system.dart';
+import 'package:design_system/src/widgetbook_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -7,9 +8,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: AppButton,
 )
 Widget primaryButton(BuildContext context) {
-  return AppButton(
-    text: 'Click Me',
-    onPressed: () {},
+  return const WidgetbookShell(
+    label: 'Primary Button',
+    child: AppButton(
+      text: 'Click Me',
+      onPressed: null, // Disabled in preview for purity or keep as is
+    ),
   );
 }
 
@@ -18,9 +22,12 @@ Widget primaryButton(BuildContext context) {
   type: AppButton,
 )
 Widget coloredButton(BuildContext context) {
-  return AppButton(
-    text: 'Colored Button',
-    color: AppColors.error,
-    onPressed: () {},
+  return WidgetbookShell(
+    label: 'Colored Button',
+    child: AppButton(
+      text: 'Colored Button',
+      color: AppColors.error,
+      onPressed: () {},
+    ),
   );
 }

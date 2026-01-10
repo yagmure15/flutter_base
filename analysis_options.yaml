@@ -13,6 +13,7 @@ analyzer:
     - "**/*.gform.dart"
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
+    - "mason/**"
   errors:
     missing_required_param: error
     missing_return: error

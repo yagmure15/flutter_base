@@ -13,6 +13,16 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../config/app_flavor.dart' as _i954;
+import '../../features/test_feature/data/datasources/test_feature_remote_datasource.dart'
+    as _i906;
+import '../../features/test_feature/data/repositories/test_feature_repository_impl.dart'
+    as _i244;
+import '../../features/test_feature/domain/repositories/test_feature_repository.dart'
+    as _i1048;
+import '../../features/test_feature/domain/usecases/get_test_feature.dart'
+    as _i439;
+import '../../features/test_feature/presentation/bloc/test_feature_cubit.dart'
+    as _i751;
 import '../router/app_router.dart' as _i81;
 import '../storage/secure_token_storage.dart' as _i535;
 import '../translations/strings.g.dart' as _i232;
@@ -39,10 +49,15 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i81.AppRouter>(() => _i81.AppRouter());
+    gh.lazySingleton<_i906.TestFeatureRemoteDataSource>(
+        () => _i906.TestFeatureRemoteDataSourceImpl());
     gh.singleton<_i954.AppFlavor>(
       () => _i954.DevFlavor(),
       registerFor: {_dev},
     );
+    gh.lazySingleton<_i1048.TestFeatureRepository>(() =>
+        _i244.TestFeatureRepositoryImpl(
+            gh<_i906.TestFeatureRemoteDataSource>()));
     gh.lazySingleton<_i917.TokenStorage>(() => _i535.SecureTokenStorage());
     gh.singleton<_i954.AppFlavor>(
       () => _i954.StagingFlavor(),
@@ -56,6 +71,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => appModule.baseUrl(gh<_i954.AppFlavor>()),
       instanceName: 'baseUrl',
     );
+    gh.lazySingleton<_i439.GetTestFeature>(
+        () => _i439.GetTestFeature(gh<_i1048.TestFeatureRepository>()));
+    gh.factory<_i751.TestFeatureCubit>(
+        () => _i751.TestFeatureCubit(gh<_i439.GetTestFeature>()));
     return this;
   }
 }
