@@ -10,12 +10,12 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:app_ui/src/colors/app_colors.stories.dart'
-    as _app_ui_src_colors_app_colors_stories;
-import 'package:app_ui/src/introduction/app_welcome.stories.dart'
-    as _app_ui_src_introduction_app_welcome_stories;
-import 'package:app_ui/src/widgets/app_button.stories.dart'
-    as _app_ui_src_widgets_app_button_stories;
+import 'package:design_system/src/colors/app_colors.stories.dart'
+    as _design_system_src_colors_app_colors_stories;
+import 'package:design_system/src/introduction/app_welcome.stories.dart'
+    as _design_system_src_introduction_app_welcome_stories;
+import 'package:design_system/src/widgets/app_button.stories.dart'
+    as _design_system_src_widgets_app_button_stories;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
 final directories = <_widgetbook.WidgetbookNode>[
@@ -26,7 +26,7 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'ColorPalette',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'Palette',
-          builder: _app_ui_src_colors_app_colors_stories.colorPalette,
+          builder: _design_system_src_colors_app_colors_stories.colorPalette,
         ),
       )
     ],
@@ -38,7 +38,8 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'AppWelcome',
         useCase: _widgetbook.WidgetbookUseCase(
           name: 'Welcome',
-          builder: _app_ui_src_introduction_app_welcome_stories.appWelcome,
+          builder:
+              _design_system_src_introduction_app_welcome_stories.appWelcome,
         ),
       )
     ],
@@ -51,11 +52,13 @@ final directories = <_widgetbook.WidgetbookNode>[
         useCases: [
           _widgetbook.WidgetbookUseCase(
             name: 'Colored',
-            builder: _app_ui_src_widgets_app_button_stories.coloredButton,
+            builder:
+                _design_system_src_widgets_app_button_stories.coloredButton,
           ),
           _widgetbook.WidgetbookUseCase(
             name: 'Primary',
-            builder: _app_ui_src_widgets_app_button_stories.primaryButton,
+            builder:
+                _design_system_src_widgets_app_button_stories.primaryButton,
           ),
         ],
       )

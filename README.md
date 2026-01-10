@@ -1,7 +1,7 @@
 # Flutter Base Project
 
 ## Environment Setup
-This project uses `envied` for environment variables and `flutter_flavorizr` for flavors.
+This project uses `envied` for environment variables.
 
 ### Setup
 1. Copy `.env` to `.env.dev`, `.env.staging`, `.env.prod`.

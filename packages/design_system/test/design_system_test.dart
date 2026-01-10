@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('app_ui package imports correctly', () {
+  test('design_system package imports correctly', () {
     expect(true, isTrue);
   });
 }

@@ -81,7 +81,7 @@ melos exec -- rm pubspec.lock
 
 Sadece belirli bir pakette komut çalıştırmak isterseniz `--scope` kullanabilirsiniz:
 ```bash
-melos exec --scope="app_ui" -- flutter pub get
+melos exec --scope="design_system" -- flutter pub get
 ```
 
 Daha fazla bilgi için [Melos Resmi Dokümantasyonu](https://melos.invertase.dev/) incelenebilir.

@@ -7,10 +7,9 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
-  app_ui:
-    path: ../../packages/app_ui
   auto_route: ^7.8.4
-  # Güvenli ortam değişkenleri için
+  design_system:
+    path: ../../packages/design_system
   envied: ^0.5.2
   flutter:
     sdk: flutter
@@ -26,7 +25,6 @@ dependencies:
   slang_flutter: ^3.31.0
 
 dev_dependencies:
-  # Kod üretimi için
   auto_route_generator: ^7.3.2
   build_runner: ^2.4.6
   envied_generator: ^0.5.2
@@ -38,35 +36,5 @@ dev_dependencies:
   melos: ^6.3.1
   slang_build_runner: ^3.31.0
 
-flavorizr:
-  app:
-    android:
-      flavorDimensions: "flavor"
-    ios:
-      bundleId: "com.example.flutter_base"
-  flavors:
-    dev:
-      app:
-        name: "Flutter Base Dev"
-      android:
-        applicationId: "com.example.flutter_base.dev"
-      ios:
-        bundleId: "com.example.flutter_base.dev"
-    staging:
-      app:
-        name: "Flutter Base Staging"
-      android:
-        applicationId: "com.example.flutter_base.staging"
-      ios:
-        bundleId: "com.example.flutter_base.staging"
-    prod:
-      app:
-        name: "Flutter Base"
-      android:
-        applicationId: "com.example.flutter_base"
-
-
-
-# The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
