@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base_core/flutter_base_core.dart';
+import 'package:{{name.snakeCase()}}_core/{{name.snakeCase()}}_core.dart';
 
 void main() {
   runApp(const CoreExampleApp());
@@ -12,7 +12,7 @@ class CoreExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Flutter Base Core Example')),
+        appBar: AppBar(title: const Text('{{name.titleCase()}} Core Example')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -190,7 +190,7 @@ melos run gen
 
 ---
 
-## 💡 İpuçları (Junior Dostu)
+## 💡 İpuçları
 
 - **Bir şeyi değiştirmeden önce:** Mutlaka o şeyin `core` paketinde mi yoksa sadece `client` uygulamasında mı olduğuna bakın. Ortak bir yapıysa `packages/core` altında olmalıdır.
 - **Hata alırsan:** Genelde `melos run gen` komutunu çalıştırmak (build_runner) çözümdür. Freezed, AutoRoute, Injectable gibi kütüphaneler kod üretimine dayalıdır.

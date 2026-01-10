@@ -1,4 +1,4 @@
-import 'package:{{name.snakeCase()}}_core/core.dart';
+import 'package:{{name.snakeCase()}}_core/{{name.snakeCase()}}_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 

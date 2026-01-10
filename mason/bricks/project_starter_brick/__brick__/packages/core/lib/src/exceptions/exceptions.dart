@@ -1,5 +1,4 @@
-import '../../core.dart' show Failure;
-import 'failure.dart' show Failure;
+import '../../{{name.snakeCase()}}_core.dart';
 
 /// [AppException] is the base class for all exceptions in the **Data Layer**.
 ///

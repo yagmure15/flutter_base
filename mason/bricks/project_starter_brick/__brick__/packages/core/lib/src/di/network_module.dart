@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../network/interceptors/auth_interceptor.dart';
 
@@ -22,7 +25,26 @@ abstract class NetworkModule {
     // Interceptor Sıralaması Önemlidir:
     dio.interceptors.addAll([
       authInterceptor,
-      // PrettyDioLogger(), // 3. Logla (Sadece debug modda ekle - paket dependency eklenirse açılır)
+      RetryInterceptor(
+        dio: dio,
+        logPrint: print,
+        retries: 3,
+        retryDelays: const [
+          Duration(seconds: 1),
+          Duration(seconds: 2),
+          Duration(seconds: 3),
+        ],
+      ),
+      if (kDebugMode)
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
     ]);
 
     return dio;

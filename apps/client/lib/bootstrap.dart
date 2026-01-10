@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_base_core/core.dart';
+import 'package:flutter_base_core/flutter_base_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/firebase_options.dart';

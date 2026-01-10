@@ -1,4 +1,4 @@
-import 'package:flutter_base_core/core.dart';
+import 'package:flutter_base_core/flutter_base_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 

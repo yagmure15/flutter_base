@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_base_core/core.dart';
+import 'package:flutter_base_core/flutter_base_core.dart';
 import 'package:injectable/injectable.dart';
 import '../entities/{{name.snakeCase()}}.dart';
 import '../repositories/{{name.snakeCase()}}_repository.dart';

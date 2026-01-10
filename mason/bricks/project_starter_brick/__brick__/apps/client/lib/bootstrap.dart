@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:{{name.snakeCase()}}_core/core.dart';
+import 'package:{{name.snakeCase()}}_core/{{name.snakeCase()}}_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/firebase_options.dart';

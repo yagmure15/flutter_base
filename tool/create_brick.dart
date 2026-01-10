@@ -1,6 +1,6 @@
 import 'dart:io';
 
-// import 'package:flutter_base_core/core.dart'; // Flutter paketi CLI'da çalışmaz
+// import 'package:flutter_base_core/flutter_base_core.dart'; // Flutter paketi CLI'da çalışmaz
 
 // Basit bir logger sınıfı tanımlayalım
 class Logger {
