@@ -5,5 +5,7 @@ environment:
   sdk: ^3.6.0
 
 dev_dependencies:
+  flutter_base_core:
+    path: packages/core
   flutter_lints: ^5.0.0
   melos: ^6.3.1
