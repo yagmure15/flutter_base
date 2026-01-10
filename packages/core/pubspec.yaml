@@ -1,7 +1,8 @@
 name: flutter_base_core
-description: Core shared infrastructure for Flutter Base project.
+description: A robust, opinionated core infrastructure for Flutter apps. Includes network (Dio), storage, and logging utilities designed for Feature-First Clean Architecture.
 version: 0.1.0
-publish_to: 'none'
+homepage: https://github.com/yagmure15/flutter_base
+repository: https://github.com/yagmure15/flutter_base
 
 environment:
   sdk: ^3.6.0

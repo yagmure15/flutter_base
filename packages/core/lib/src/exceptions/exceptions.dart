@@ -1,5 +1,4 @@
-import '../../core.dart' show Failure;
-import 'failure.dart' show Failure;
+import '../../flutter_base_core.dart';
 
 /// [AppException] is the base class for all exceptions in the **Data Layer**.
 ///
