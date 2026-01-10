@@ -22,6 +22,12 @@ scripts:
         dart format .
     description: "Tüm paketleri formatlar."
 
+  test:
+    run: |
+      melos exec -c 1 --dir-exists="test" -- \
+        flutter test
+    description: "Runs tests in all packages."
+
   test:select:
     run: |
       melos exec -c 1 --dir-exists="test" -- \
