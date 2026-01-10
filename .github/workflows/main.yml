@@ -17,13 +17,16 @@ jobs:
         uses: flutter-actions/setup-flutter@v3
         with:
           channel: stable
-          version: 3.24.3 # Use a recent stable version or match project constraints
+          # version: 3.24.3 # Removed to fetch latest stable (compatible with Dart 3.6+)
 
       - name: Install Melos
         run: dart pub global activate melos
 
       - name: Bootstrap Workspace
         run: melos bootstrap
+
+      - name: Generate Code
+        run: melos run gen
 
       - name: Analyze Project
         run: melos run analyze
