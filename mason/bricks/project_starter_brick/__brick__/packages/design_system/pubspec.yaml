@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   widgetbook: ^3.0.0
   widgetbook_annotation: ^3.0.0
+  flutter_svg: ^2.0.17
+  cached_network_image: ^3.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

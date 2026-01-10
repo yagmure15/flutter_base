@@ -41,6 +41,50 @@ Projede kullanılan temel kütüphaneler ve tercih edilme sebepleri:
 | **flutter_secure_storage** | Güvenli Depolama | Token, şifre gibi hassas verileri cihazın güvenli alanında (Keychain/Keystore) saklar. |
 | **melos** | Monorepo Aracı | Birden fazla paketi (core, design_system, app) tek bir yerden yönetmek için. |
 | **mason** | Kod Üretimi | Standartlara uygun yeni özellik (feature) veya proje oluşturmak için şablon sistemi. |
+| **formz** | Form Doğrulama | Email, Şifre gibi alanların validasyonunu UI'dan ayırıp Domain katmanında yapmak için. |
+| **connectivity_plus** | İnternet Kontrolü | Cihazın internet bağlantısı var mı (Wifi/Mobil) kontrol etmek için. |
+| **permission_handler** | İzin Yönetimi | Kamera, Galeri gibi izinleri istemek için. |
+
+---
+
+## 📘 Core Yardımcı Sınıflar Nasıl Kullanılır?
+
+### 1. Basit Depolama (KeyValueStorage)
+`flutter_secure_storage` sadece şifreler içindir. Basit veriler (Theme tercihi, Onboarding görüldü mü vb.) için `KeyValueStorage` kullanın.
+
+```dart
+// Dependency Injection ile çağırın
+final storage = getIt<KeyValueStorage>();
+
+// Kaydet
+await storage.setString('theme_mode', 'dark');
+
+// Oku
+final theme = storage.getString('theme_mode');
+```
+
+### 2. Form Doğrulama (Formz)
+Form validasyonlarını `Bloc` içinde yapmak için hazır sınıflar eklenmiştir (`EmailInput`, `PasswordInput`, `RequiredTextInput`).
+
+```dart
+// 1. State içinde tanımla
+final email = EmailInput.pure();
+
+// 2. Kullanıcı yazarken güncelle (Bloc Event)
+final newEmail = EmailInput.dirty(event.text);
+print(newEmail.isValid); // true/false
+print(newEmail.error);   // Hata varsa döner
+```
+
+### 3. İnternet ve İzinler
+
+```dart
+// İnternet var mı?
+final hasConnection = await getIt<ConnectivityService>().hasConnection;
+
+// Kamera izni iste
+final granted = await getIt<PermissionService>().requestPermission(Permission.camera);
+```
 
 ---
 
