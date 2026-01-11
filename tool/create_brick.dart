@@ -86,6 +86,8 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
 
     try {
       if (entity is Directory) {
+        // Klasörü açıkça oluştur (Boş klasörlerin de kopyalanması için)
+        Directory(newPath).createSync(recursive: true);
         await _copyAndTemplatize(entity, Directory(newPath));
       } else if (entity is File) {
         await _processFile(entity, File(newPath));
@@ -130,5 +132,6 @@ Future<void> _processFile(File sourceFile, File targetFile) async {
 
 bool _isBinary(String path) {
   final ext = path.split('.').last.toLowerCase();
-  return ['png', 'jpg', 'jpeg', 'gif', 'ico', 'webp', 'ttf', 'otf', 'pdf', 'jar', 'keystore', 'jks'].contains(ext);
+  return ['png', 'jpg', 'jpeg', 'gif', 'ico', 'webp', 'ttf', 'otf', 'pdf', 'jar', 'keystore', 'jks', 'svg']
+      .contains(ext);
 }

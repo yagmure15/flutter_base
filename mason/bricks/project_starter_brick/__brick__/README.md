@@ -1,6 +1,38 @@
 # {{name.titleCase()}}
 
-Bu proje, ölçeklenebilir, test edilebilir ve bakımı kolay mobil uygulamalar geliştirmek için tasarlanmış modern bir **{{name.titleCase()}}** (Temel) projesidir.
+## 📦 Yeni Proje Başlatma (Mason Template)
+
+Bu projeyi bir şablon (template) olarak kullanarak saniyeler içinde yeni bir proje oluşturabilirsiniz. Bu özellik, `apps/client` yapısını ve `packages/core` modülünü otomatik olarak kopyalar, isimlendirir ve yapılandırır.
+
+### Nasıl Kullanılır?
+
+1. **Mason'ı Yükleyin (Eğer yoksa):**
+   ```bash
+   dart pub global activate mason_cli
+   ```
+
+2. **Brick'i Global Olarak Ekleyin:**
+   Kendi GitHub reponuzdan şablonu indirin (Sadece 1 kez yapmanız yeterli):
+   ```bash
+   mason add -g project_starter_brick git https://github.com/yagmure15/{{name.snakeCase()}}.git --path mason/bricks/project_starter_brick
+   ```
+
+3. **Yeni Bir Proje Oluşturun:**
+   Bilgisayarınızın herhangi bir yerinde (Boş bir klasörde):
+   ```bash
+   mason make project_starter_brick --name <yeni_proje_adi>
+   ```
+   **Örnek:**
+   ```bash
+   mason make project_starter_brick --name yemek_sepeti
+   ```
+   Bu işlem size şunları içeren hazır bir proje verir:
+   - `apps/yemek_sepeti` (Client uygulaması)
+   - `packages/yemek_sepeti_core` (İsmi özelleştirilmiş Core modülü)
+   - `packages/design_system`
+   - Tüm konfigürasyonlar (Flavorlar, Build Runner vb.)
+
+---
 
 ## 🏗 Mimari: Feature-First Clean Architecture
 
