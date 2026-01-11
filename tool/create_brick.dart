@@ -87,8 +87,15 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
     try {
       if (entity is Directory) {
         // Klasörü açıkça oluştur (Boş klasörlerin de kopyalanması için)
-        Directory(newPath).createSync(recursive: true);
-        await _copyAndTemplatize(entity, Directory(newPath));
+        final newDir = Directory(newPath);
+        newDir.createSync(recursive: true);
+
+        // Eğer assets klasörü ise ve boşsa içine .gitkeep koy
+        if (newDir.path.contains('assets') && newDir.listSync().isEmpty) {
+          File('${newDir.path}/.gitkeep').createSync();
+        }
+
+        await _copyAndTemplatize(entity, newDir);
       } else if (entity is File) {
         await _processFile(entity, File(newPath));
       }
