@@ -5,7 +5,7 @@ import '../logger/log_it.dart';
 import '../monitoring/monitoring_service.dart';
 
 class AppBlocObserver extends BlocObserver {
-  AppBlocObserver(this._monitoringService);
+  AppBlocObserver(this._monitoringService) : super();
 
   final MonitoringService _monitoringService;
 

@@ -53,6 +53,14 @@ void main() async {
 
   await _copyAndTemplatize(currentDir, targetDir);
 
+  // .env dosyalarını oluştur (g.dart üretimi için gerekli)
+  logger.info('📝 .env dosyaları oluşturuluyor...');
+  final envPath = '${targetDir.path}/apps/client';
+
+  File('$envPath/.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nAPI_KEY=dev_key');
+  File('$envPath/.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nAPI_KEY=staging_key');
+  File('$envPath/.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nAPI_KEY=prod_key');
+
   logger
     ..info('✅ İşlem tamamlandı! Brick kullanıma hazır.')
     ..info('👉 Kullanım: mason make project_starter_brick --name my_new_app');

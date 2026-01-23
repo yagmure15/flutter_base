@@ -53,7 +53,9 @@ mixin NetworkHandlerMixin {
       case DioExceptionType.cancel:
         return const NetworkFailure.canceled();
       default:
-        return const NetworkFailure.unknown('An unknown network error occurred');
+        return const NetworkFailure.unknown(
+          'An unknown network error occurred',
+        );
     }
   }
 

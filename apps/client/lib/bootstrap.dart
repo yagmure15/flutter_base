@@ -19,7 +19,9 @@ Future<void> bootstrap({required FutureOr<Widget> Function() builder, required S
       );
 
       /// Setup DI
-      await configureDependencies(environment: environment);
+      await configureDependencies(
+        environment: environment,
+      );
       final monitoringService = getIt<MonitoringService>();
       await monitoringService.initialize();
 

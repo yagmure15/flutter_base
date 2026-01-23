@@ -17,7 +17,9 @@ class CoreExampleApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('This app demonstrates that the core package compiles.'),
+              const Text(
+                'This app demonstrates that the core package compiles.',
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
