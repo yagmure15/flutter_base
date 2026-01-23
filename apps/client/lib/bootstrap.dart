@@ -42,7 +42,11 @@ Future<void> bootstrap({
     },
     (error, stackTrace) {
       log(error.toString(), stackTrace: stackTrace);
-      getIt<MonitoringService>().recordError(error, stackTrace, fatal: true);
+      getIt<MonitoringService>().recordError(
+        error,
+        stackTrace,
+        fatal: true,
+      );
     },
   );
 }

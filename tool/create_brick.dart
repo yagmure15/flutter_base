@@ -1,7 +1,5 @@
 import 'dart:io';
 
-// import 'package:flutter_base_core/flutter_base_core.dart'; // Flutter paketi CLI'da çalışmaz
-
 // Basit bir logger sınıfı tanımlayalım
 class Logger {
   void info(String message) => stdout.writeln(message);
@@ -45,7 +43,7 @@ void main() async {
     ..info('📂 Kaynak: ${currentDir.path}')
     ..info('🎯 Hedef: ${targetDir.path}');
 
-  // Hedef klasör varsa temizle (HELLLO.md vs silinsin)
+  // Hedef klasör varsa temizle
   if (targetDir.existsSync()) {
     targetDir.deleteSync(recursive: true);
   }
@@ -53,13 +51,15 @@ void main() async {
 
   await _copyAndTemplatize(currentDir, targetDir);
 
-  // .env dosyalarını oluştur (g.dart üretimi için gerekli)
+  // .env dosyalarını oluştur (dot.env formatında kopyalanması için)
   logger.info('📝 .env dosyaları oluşturuluyor...');
   final envPath = '${targetDir.path}/apps/client';
 
-  File('$envPath/.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nAPI_KEY=dev_key');
-  File('$envPath/.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nAPI_KEY=staging_key');
-  File('$envPath/.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nAPI_KEY=prod_key');
+  // Mason '.' ile başlayan dosyaları bazen atlayabiliyor, o yüzden 'dot.' öneki kullanıyoruz
+  // post_gen hook'unda bunları geri çevireceğiz.
+  File('$envPath/dot.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nAPI_KEY=dev_key');
+  File('$envPath/dot.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nAPI_KEY=staging_key');
+  File('$envPath/dot.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nAPI_KEY=prod_key');
 
   logger
     ..info('✅ İşlem tamamlandı! Brick kullanıma hazır.')
@@ -75,26 +75,21 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
       continue;
     }
 
-    // Recursion önleme: Hedef klasörün kendisini kopyalamaya çalışma
-    // canonicalPath kullanarak sembolik linkleri vs çözmek daha garantidir ama
-    // basitçe path kontrolü yapalım.
     if (entity.path.contains('mason/bricks/project_starter_brick')) {
       continue;
     }
 
-    // Mason klasörünü de kopyalamayalım (içinde bricks var, recursion olabilir)
+    // Mason klasörünü de kopyalamayalım
     if (entityName == 'mason') {
       continue;
     }
 
     // Dosya/Klasör isminde proje adı varsa onu {{name}} değişkenine çevir
-    // Örneğin: flutter_base -> {{name.snakeCase()}}
     final newName = entityName.replaceAll(originalProjectName, '{{name.snakeCase()}}');
     final newPath = '${destination.path}/$newName';
 
     try {
       if (entity is Directory) {
-        // Klasörü açıkça oluştur (Boş klasörlerin de kopyalanması için)
         final newDir = Directory(newPath)..createSync(recursive: true);
 
         // Eğer assets klasörü ise ve boşsa içine .gitkeep koy
@@ -113,7 +108,6 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
 }
 
 Future<void> _processFile(File sourceFile, File targetFile) async {
-  // Binary dosyaları (resim, font vb.) direkt kopyala
   if (_isBinary(sourceFile.path)) {
     targetFile.createSync(recursive: true);
     await sourceFile.copy(targetFile.path);
@@ -124,20 +118,12 @@ Future<void> _processFile(File sourceFile, File targetFile) async {
     var content = await sourceFile.readAsString();
 
     // İçerikteki değişiklikleri yap
-    // 1. Proje adı (snake_case) -> flutter_base -> {{name.snakeCase()}}
     content = content.replaceAll('flutter_base', '{{name.snakeCase()}}');
-
-    // 2. Proje başlığı (Title Case) -> Flutter Base -> {{name.titleCase()}}
-    // Basit bir replace yapıyoruz, case-sensitive dikkat
     content = content.replaceAll('Flutter Base', '{{name.titleCase()}}');
 
-    // 3. Bundle ID vb. için eklenebilir. Şimdilik 'flutter_base' yeterli.
-
-    // Hedef dosyayı oluştur ve yaz
     targetFile.createSync(recursive: true);
     await targetFile.writeAsString(content);
   } catch (e) {
-    // Okuma hatası olursa (bazen UTF-8 olmayan text dosyaları olabilir), binary gibi kopyala
     logger.warn('⚠️ Binary olarak kopyalanıyor: ${sourceFile.path}');
     targetFile.createSync(recursive: true);
     await sourceFile.copy(targetFile.path);

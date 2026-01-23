@@ -40,7 +40,11 @@ class AppBlocObserver extends BlocObserver {
     if (kDebugMode) {
       logger.error('onError -- ${bloc.runtimeType}, $error');
     } else {
-      _monitoringService.recordError(error, stackTrace, reason: 'Bloc Error: ${bloc.runtimeType}');
+      _monitoringService.recordError(
+        error,
+        stackTrace,
+        reason: 'Bloc Error: ${bloc.runtimeType}',
+      );
     }
   }
 
