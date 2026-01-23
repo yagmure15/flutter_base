@@ -18,14 +18,10 @@ class EmailInput extends FormzInput<String, EmailValidationError> {
 
   static final Pattern _emailRegExp =
       // ignore: deprecated_member_use
-      RegExp(
-    r'^[a-zA-Z0-9.!#$%&'\''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
-  );
+      RegExp(r'^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
 
   @override
   EmailValidationError? validator(String? value) {
-    return _emailRegExp.hasMatch(value ?? '')
-        ? null
-        : EmailValidationError.invalid;
+    return _emailRegExp.hasMatch(value ?? '') ? null : EmailValidationError.invalid;
   }
 }
