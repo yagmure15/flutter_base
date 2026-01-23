@@ -16,12 +16,14 @@ class EmailInput extends FormzInput<String, EmailValidationError> {
   /// {@macro email}
   const EmailInput.dirty([super.value = '']) : super.dirty();
 
-  static final RegExp _emailRegExp = RegExp(
+  static final Pattern _emailRegExp =
+      // ignore: deprecated_member_use
+      RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
   );
 
   @override
   EmailValidationError? validator(String? value) {
-    return _emailRegExp.hasMatch(value ?? '') ? null : EmailValidationError.invalid;
+    return (value ?? '').contains(_emailRegExp) ? null : EmailValidationError.invalid;
   }
 }
