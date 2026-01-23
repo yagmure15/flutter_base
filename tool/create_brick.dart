@@ -57,9 +57,9 @@ void main() async {
 
   // Mason '.' ile başlayan dosyaları bazen atlayabiliyor, o yüzden 'dot.' öneki kullanıyoruz
   // post_gen hook'unda bunları geri çevireceğiz.
-  File('$envPath/dot.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nAPI_KEY=dev_key');
-  File('$envPath/dot.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nAPI_KEY=staging_key');
-  File('$envPath/dot.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nAPI_KEY=prod_key');
+  File('$envPath/dot.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nKEY=dev_key');
+  File('$envPath/dot.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nKEY=staging_key');
+  File('$envPath/dot.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nKEY=prod_key');
 
   logger
     ..info('✅ İşlem tamamlandı! Brick kullanıma hazır.')

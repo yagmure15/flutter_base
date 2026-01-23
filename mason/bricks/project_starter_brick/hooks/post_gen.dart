@@ -9,7 +9,8 @@ Future<void> run(HookContext context) async {
   final clientDir = Directory('apps/client');
   if (clientDir.existsSync()) {
     for (final file in clientDir.listSync()) {
-      if (file is File && file.path.contains('dot.env')) {
+      final fileName = file.path.split(Platform.pathSeparator).last;
+      if (file is File && fileName.startsWith('dot.env')) {
         final newPath = file.path.replaceFirst('dot.env', '.env');
         file.renameSync(newPath);
       }
@@ -34,10 +35,12 @@ Future<void> run(HookContext context) async {
   bootstrapProgress.complete('Bootstrap completed.');
 
   // 2. Generate Code (Build Runner)
-  final genProgress = context.logger.progress('Generating code...');
+  final genProgress = context.logger.progress('Generating code (Freezed, Envied etc.)...');
   final gen = await Process.run('melos', ['run', 'gen'], runInShell: true);
   if (gen.exitCode != 0) {
     genProgress.fail('Code generation failed. You might need to run "melos run gen" manually.');
+    context.logger.info(gen.stderr);
+    context.logger.info(gen.stdout);
   } else {
     genProgress.complete('Code generation completed.');
   }
@@ -53,6 +56,7 @@ Future<void> run(HookContext context) async {
   final analyze = await Process.run('melos', ['run', 'analyze'], runInShell: true);
   if (analyze.exitCode != 0) {
     analyzeProgress.complete('Analysis finished with issues.');
+    context.logger.info(analyze.stdout);
   } else {
     analyzeProgress.complete('Analysis passed successfully! 🚀');
   }
@@ -64,30 +68,29 @@ Future<void> run(HookContext context) async {
     final fvmList = await Process.run('fvm', ['list'], runInShell: true);
     final output = fvmList.stdout.toString();
     String? globalVersion;
+
+    // Improved parsing for fvm list
     for (final line in output.split('\n')) {
       if (line.contains('●')) {
-        final parts = line.split(RegExp(r'\s+'));
-        for (var i = 0; i < parts.length; i++) {
-          if (parts[i].contains('●')) {
-            // Look for the version string in neighbor parts
-            if (i > 0)
-              globalVersion = parts[i - 1];
-            else if (i < parts.length - 1)
-              globalVersion = parts[i + 1];
-            break;
-          }
-          if (parts[i].isNotEmpty && !parts[i].contains('│') && !parts[i].contains('─')) {
-            globalVersion = parts[i];
-          }
+        // Line usually looks like: 3.27.0 │ │ ●
+        // We take the first part which is the version
+        final match = RegExp(r'^([\d\.\w\-]+)').firstMatch(line.trim());
+        if (match != null) {
+          globalVersion = match.group(1);
+          break;
         }
       }
     }
 
     if (globalVersion != null && globalVersion.isNotEmpty) {
-      await Process.run('fvm', ['use', globalVersion, '--force'], runInShell: true);
-      fvmProgress.complete('FVM configured with Flutter $globalVersion');
+      final fvmUse = await Process.run('fvm', ['use', globalVersion, '--force'], runInShell: true);
+      if (fvmUse.exitCode == 0) {
+        fvmProgress.complete('FVM configured with Flutter $globalVersion');
+      } else {
+        fvmProgress.fail('FVM use failed: ${fvmUse.stderr}');
+      }
     } else {
-      fvmProgress.fail('Could not detect global FVM version.');
+      fvmProgress.fail('Could not detect global FVM version. Set one with "fvm global <version>".');
     }
   } else {
     fvmProgress.fail('FVM not found.');
