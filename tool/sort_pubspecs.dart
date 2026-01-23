@@ -6,21 +6,18 @@ void main() {
 }
 
 void sortAllPubspecs(Directory directory) {
-  final pubspecs = directory
+  directory
       .listSync(recursive: true)
       .where((file) => file is File && file.path.endsWith('pubspec.yaml'))
-      .cast<File>();
-
-  for (final pubspec in pubspecs) {
-    _sortPubspec(pubspec);
-  }
+      .cast<File>()
+      .forEach(_sortPubspec);
 }
 
 void _sortPubspec(File file) {
   final lines = file.readAsLinesSync();
   final newLines = <String>[];
 
-  int i = 0;
+  var i = 0;
   while (i < lines.length) {
     final line = lines[i];
     final trimmed = line.trim();
@@ -57,7 +54,7 @@ void _sortPubspec(File file) {
     }
   }
 
-  file.writeAsStringSync(newLines.join('\n') + '\n');
+  file.writeAsStringSync('${newLines.join('\n')}\n');
 }
 
 List<String> _sortDependencyBlock(List<String> lines) {
@@ -90,16 +87,16 @@ List<String> _sortDependencyBlock(List<String> lines) {
 
   final result = <String>[];
   for (final entry in entries) {
-    result.addAll(entry.lines);
-    result.addAll(entry.trailingLines);
+    result
+      ..addAll(entry.lines)
+      ..addAll(entry.trailingLines);
   }
   return result;
 }
 
 class _DependencyEntry {
+  _DependencyEntry(this.name, this.lines);
   final String name;
   final List<String> lines;
   final List<String> trailingLines = [];
-
-  _DependencyEntry(this.name, this.lines);
 }
