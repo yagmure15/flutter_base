@@ -7,6 +7,9 @@ abstract class EnvDev {
   @EnviedField(varName: 'KEY')
   static const String key = _EnvDev.key;
 
-  @EnviedField(varName: 'BASE_URL', defaultValue: 'https://dev.api.example.com')
+  @EnviedField(
+    varName: 'BASE_URL',
+    defaultValue: 'https://dev.api.example.com',
+  )
   static const String baseUrl = _EnvDev.baseUrl;
 }

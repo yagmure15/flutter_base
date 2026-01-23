@@ -9,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/firebase_options.dart';
 import 'core/dependency/di.dart';
 
-Future<void> bootstrap({required FutureOr<Widget> Function() builder, required String environment}) async {
+Future<void> bootstrap({
+  required FutureOr<Widget> Function() builder,
+  required String environment,
+}) async {
   await runZonedGuarded(
     () async {
       /// Initialize Flutter
@@ -19,7 +22,9 @@ Future<void> bootstrap({required FutureOr<Widget> Function() builder, required S
       );
 
       /// Setup DI
-      await configureDependencies(environment: environment);
+      await configureDependencies(
+        environment: environment,
+      );
       final monitoringService = getIt<MonitoringService>();
       await monitoringService.initialize();
 
