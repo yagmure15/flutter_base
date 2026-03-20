@@ -14,7 +14,7 @@ Bu projeyi bir şablon (template) olarak kullanarak saniyeler içinde yeni bir p
 2. **Brick'i Global Olarak Ekleyin:**
    Kendi GitHub reponuzdan şablonu indirin (Sadece 1 kez yapmanız yeterli):
    ```bash
-   mason add -g project_starter_brick git https://github.com/yagmure15/flutter_base.git --path mason/bricks/project_starter_brick
+   mason add -g project_starter_brick --git-url https://github.com/yagmure15/flutter_base.git --git-path mason/bricks/project_starter_brick
    ```
 
 3. **Yeni Bir Proje Oluşturun:**
