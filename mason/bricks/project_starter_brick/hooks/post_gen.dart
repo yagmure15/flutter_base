@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
   final directory = Directory.current;
 
-  // 0. Fix .env files (rename dot.env to .env)
+  // 0. Fix dot-files (rename dot.env* -> .env*, dot.fvmrc -> .fvmrc)
   final envFixProgress = context.logger.progress('Configuring .env files...');
   final clientDir = Directory('apps/client');
   if (clientDir.existsSync()) {
@@ -16,89 +17,134 @@ Future<void> run(HookContext context) async {
       }
     }
   }
+  final dotFvmrc = File('dot.fvmrc');
+  if (dotFvmrc.existsSync()) {
+    dotFvmrc.renameSync('.fvmrc');
+  }
   envFixProgress.complete('.env files configured.');
 
   // 1. Sort dependencies in all pubspec.yaml files
-  final sortProgress = context.logger.progress('Sorting dependencies in pubspec.yaml files...');
+  final sortProgress =
+      context.logger.progress('Sorting dependencies in pubspec.yaml files...');
   _sortAllPubspecs(directory);
   sortProgress.complete('Dependencies sorted.');
 
-  // 2. Install Melos if needed and Bootstrap
-  final bootstrapProgress = context.logger.progress('Bootstrapping project (melos bootstrap)...');
-
-  var melosResult = await Process.run('melos', ['--version'], runInShell: true);
-  if (melosResult.exitCode != 0) {
-    bootstrapProgress.update('Melos not found, activating globally...');
-    await Process.run('dart', ['pub', 'global', 'activate', 'melos'], runInShell: true);
+  // 2. Setup FVM *before* bootstrapping so that melos/flutter/dart run with the
+  //    SDK version pinned by the template (.fvmrc). Falls back to the global
+  //    FVM version when .fvmrc is missing, and to PATH when FVM is not installed.
+  final fvmProgress = context.logger.progress('Setting up FVM...');
+  final fvmCheck = await Process.run('fvm', ['--version'], runInShell: true);
+  if (fvmCheck.exitCode == 0) {
+    final version = _readFvmrcVersion() ?? await _detectGlobalFvmVersion();
+    if (version != null && version.isNotEmpty) {
+      fvmProgress.update('Installing Flutter $version via FVM (if needed)...');
+      await Process.run('fvm', ['install', version], runInShell: true);
+      final fvmUse = await Process.run(
+        'fvm',
+        ['use', version, '--force', '--skip-pub-get'],
+        runInShell: true,
+      );
+      if (fvmUse.exitCode == 0) {
+        fvmProgress.complete('FVM configured with Flutter $version');
+      } else {
+        fvmProgress.fail('FVM use failed: ${fvmUse.stderr}');
+      }
+    } else {
+      fvmProgress.fail('Could not detect a Flutter version for FVM.');
+    }
+  } else {
+    fvmProgress.fail('FVM not found, using Flutter from PATH.');
   }
 
-  final bootstrap = await Process.run('melos', ['bootstrap'], runInShell: true);
+  // 3. Install Melos if needed and Bootstrap
+  final bootstrapProgress =
+      context.logger.progress('Bootstrapping project (melos bootstrap)...');
+
+  final melosResult = await _run('melos', ['--version']);
+  if (melosResult.exitCode != 0) {
+    bootstrapProgress.update('Melos not found, activating globally...');
+    await _run('dart', ['pub', 'global', 'activate', 'melos']);
+  }
+
+  final bootstrap = await _run('melos', ['bootstrap']);
   if (bootstrap.exitCode != 0) {
     bootstrapProgress.fail('Bootstrap failed: ${bootstrap.stderr}');
     return;
   }
   bootstrapProgress.complete('Bootstrap completed.');
 
-  // 3. Generate Code (Build Runner)
-  final genProgress = context.logger.progress('Generating code (Freezed, Envied etc.)...');
-  final gen = await Process.run('melos', ['run', 'gen'], runInShell: true);
+  // 4. Generate Code (slang + build_runner)
+  final genProgress = context.logger
+      .progress('Generating code (Slang, Freezed, Envied etc.)...');
+  final gen = await _run('melos', ['run', 'gen']);
   if (gen.exitCode != 0) {
-    genProgress.fail('Code generation failed. You might need to run "melos run gen" manually.');
-    context.logger.info(gen.stderr);
-    context.logger.info(gen.stdout);
+    genProgress.fail(
+      'Code generation failed. You might need to run "melos run gen" manually.',
+    );
+    context.logger.info(gen.stderr.toString());
+    context.logger.info(gen.stdout.toString());
   } else {
     genProgress.complete('Code generation completed.');
   }
 
-  // 4. Auto Fix & Format
-  final fixProgress = context.logger.progress('Applying fixes and formatting...');
-  await Process.run('melos', ['exec', '--', 'dart', 'fix', '--apply'], runInShell: true);
-  await Process.run('melos', ['run', 'format'], runInShell: true);
+  // 5. Auto Fix & Format
+  final fixProgress =
+      context.logger.progress('Applying fixes and formatting...');
+  await _run('melos', ['exec', '--', 'dart', 'fix', '--apply']);
+  await _run('melos', ['run', 'format']);
   fixProgress.complete('Code fixed and formatted.');
 
-  // 5. Final Analysis
+  // 6. Final Analysis
   final analyzeProgress = context.logger.progress('Running final analysis...');
-  final analyze = await Process.run('melos', ['run', 'analyze'], runInShell: true);
+  final analyze = await _run('melos', ['run', 'analyze']);
   if (analyze.exitCode != 0) {
     analyzeProgress.complete('Analysis finished with issues.');
-    context.logger.info(analyze.stdout);
+    context.logger.info(analyze.stdout.toString());
   } else {
     analyzeProgress.complete('Analysis passed successfully! 🚀');
   }
 
-  // 6. Setup FVM (Optional and more robust)
-  final fvmProgress = context.logger.progress('Setting up FVM...');
-  var fvmCheck = await Process.run('fvm', ['--version'], runInShell: true);
-  if (fvmCheck.exitCode == 0) {
-    final fvmList = await Process.run('fvm', ['list'], runInShell: true);
-    final output = fvmList.stdout.toString();
-    String? globalVersion;
-
-    for (final line in output.split('\n')) {
-      if (line.contains('●')) {
-        final match = RegExp(r'^([\d\.\w\-]+)').firstMatch(line.trim());
-        if (match != null) {
-          globalVersion = match.group(1);
-          break;
-        }
-      }
-    }
-
-    if (globalVersion != null && globalVersion.isNotEmpty) {
-      final fvmUse = await Process.run('fvm', ['use', globalVersion, '--force'], runInShell: true);
-      if (fvmUse.exitCode == 0) {
-        fvmProgress.complete('FVM configured with Flutter $globalVersion');
-      } else {
-        fvmProgress.fail('FVM use failed: ${fvmUse.stderr}');
-      }
-    } else {
-      fvmProgress.fail('Could not detect global FVM version.');
-    }
-  } else {
-    fvmProgress.fail('FVM not found.');
-  }
-
   context.logger.success('\n✨ Project setup complete! 🚀\n');
+}
+
+/// Reads the Flutter version pinned in `.fvmrc` (e.g. `{"flutter": "3.47.1"}`).
+String? _readFvmrcVersion() {
+  final file = File('.fvmrc');
+  if (!file.existsSync()) return null;
+  try {
+    final json = jsonDecode(file.readAsStringSync());
+    if (json is Map && json['flutter'] is String) {
+      return json['flutter'] as String;
+    }
+  } catch (_) {
+    // Ignore malformed .fvmrc and fall back to the global version.
+  }
+  return null;
+}
+
+/// Detects the global FVM version from `fvm list` output (marked with ●).
+Future<String?> _detectGlobalFvmVersion() async {
+  final fvmList = await Process.run('fvm', ['list'], runInShell: true);
+  for (final line in fvmList.stdout.toString().split('\n')) {
+    if (line.contains('●')) {
+      final match = RegExp(r'^([\d\.\w\-]+)').firstMatch(line.trim());
+      if (match != null) return match.group(1);
+    }
+  }
+  return null;
+}
+
+/// Runs [executable] with the project's FVM SDK (`.fvm/flutter_sdk/bin`)
+/// prepended to PATH when available, so melos/flutter/dart use the pinned SDK.
+Future<ProcessResult> _run(String executable, List<String> arguments) {
+  final sdkBin = Directory('${Directory.current.path}/.fvm/flutter_sdk/bin');
+  final env = <String, String>{};
+  if (sdkBin.existsSync()) {
+    final separator = Platform.isWindows ? ';' : ':';
+    env['PATH'] =
+        '${sdkBin.path}$separator${Platform.environment['PATH'] ?? ''}';
+  }
+  return Process.run(executable, arguments, runInShell: true, environment: env);
 }
 
 void _sortAllPubspecs(Directory directory) {

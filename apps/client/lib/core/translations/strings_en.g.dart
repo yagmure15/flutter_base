@@ -40,13 +40,13 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	Translations $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => Translations(meta: meta ?? this.$meta);
 
 	// Translations
-	late final TranslationsCommonEn common = TranslationsCommonEn._(_root);
-	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
+	late final Translations$common$en common = Translations$common$en._(_root);
+	late final Translations$home$en home = Translations$home$en._(_root);
 }
 
 // Path: common
-class TranslationsCommonEn {
-	TranslationsCommonEn._(this._root);
+class Translations$common$en {
+	Translations$common$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -57,8 +57,8 @@ class TranslationsCommonEn {
 }
 
 // Path: home
-class TranslationsHomeEn {
-	TranslationsHomeEn._(this._root);
+class Translations$home$en {
+	Translations$home$en._(this._root);
 
 	final Translations _root; // ignore: unused_field
 

@@ -24,15 +24,11 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 16),
-            Text(
-              'Base URL:',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Base URL:', style: Theme.of(context).textTheme.titleMedium),
             Text(
               flavor.baseUrl,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontFamily: 'monospace',
-                  ),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(fontFamily: 'monospace'),
             ),
             const SizedBox(height: 8),
             if (flavor.enableLogs) const Chip(label: Text('Logs Enabled')),

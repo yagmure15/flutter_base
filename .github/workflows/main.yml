@@ -17,7 +17,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v3
         with:
           channel: stable
-          # version: 3.24.3 # Removed to fetch latest stable (compatible with Dart 3.6+)
+          version: 3.47.1 # Keep in sync with .fvmrc
 
       - name: Install Melos
         run: dart pub global activate melos
@@ -32,7 +32,7 @@ jobs:
         run: melos run analyze
 
       - name: Check Formatting
-        run: melos run format --set-exit-if-changed
+        run: melos run format:check
 
       - name: Run Tests
         run: melos run test

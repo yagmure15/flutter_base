@@ -25,10 +25,7 @@ abstract interface class MonitoringService {
 
 @LazySingleton(as: MonitoringService)
 class FirebaseMonitoringService implements MonitoringService {
-  FirebaseMonitoringService(
-    this._analytics,
-    this._crashlytics,
-  );
+  FirebaseMonitoringService(this._analytics, this._crashlytics);
 
   final FirebaseAnalytics _analytics;
   final FirebaseCrashlytics _crashlytics;
@@ -54,10 +51,7 @@ class FirebaseMonitoringService implements MonitoringService {
       }
     }
 
-    await _analytics.logEvent(
-      name: name,
-      parameters: sanitizedParameters,
-    );
+    await _analytics.logEvent(name: name, parameters: sanitizedParameters);
   }
 
   @override

@@ -2,10 +2,10 @@ name: {{name.snakeCase()}}_workspace
 description: A workspace for {{name.snakeCase()}}.
 publish_to: 'none'
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.13.1
 
 dev_dependencies:
   {{name.snakeCase()}}_core:
     path: packages/core
-  flutter_lints: ^5.0.0
-  melos: ^6.3.1
+  flutter_lints: ^6.0.0
+  melos: ^6.3.3

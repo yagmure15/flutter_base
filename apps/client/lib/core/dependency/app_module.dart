@@ -9,7 +9,7 @@ abstract class AppModule {
   @singleton
   Future<Translations> get translations async {
     // 1. Cihazın dilini bul ve ayarla (Bekliyoruz)
-    LocaleSettings.useDeviceLocale();
+    await LocaleSettings.useDeviceLocale();
 
     // 2. Hazır olan çeviri nesnesini sisteme ver
     return LocaleSettings.instance.currentTranslations;

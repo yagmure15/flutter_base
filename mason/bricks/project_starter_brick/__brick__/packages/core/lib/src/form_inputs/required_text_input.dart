@@ -3,13 +3,14 @@ import 'package:formz/formz.dart';
 /// Validation errors for the [RequiredTextInput] [FormzInput].
 enum RequiredTextValidationError {
   /// Generic empty error.
-  empty
+  empty,
 }
 
 /// {@template required_text}
 /// Form input for a required text input.
 /// {@endtemplate}
-class RequiredTextInput extends FormzInput<String, RequiredTextValidationError> {
+class RequiredTextInput
+    extends FormzInput<String, RequiredTextValidationError> {
   /// {@macro required_text}
   const RequiredTextInput.pure() : super.pure('');
 

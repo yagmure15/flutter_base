@@ -22,26 +22,30 @@ final directories = <_widgetbook.WidgetbookNode>[
   _widgetbook.WidgetbookFolder(
     name: 'colors',
     children: [
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'ColorPalette',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'Palette',
-          builder: _design_system_src_colors_app_colors_stories.colorPalette,
-        ),
-      )
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Palette',
+            builder: _design_system_src_colors_app_colors_stories.colorPalette,
+          ),
+        ],
+      ),
     ],
   ),
   _widgetbook.WidgetbookFolder(
     name: 'introduction',
     children: [
-      _widgetbook.WidgetbookLeafComponent(
+      _widgetbook.WidgetbookComponent(
         name: 'AppWelcome',
-        useCase: _widgetbook.WidgetbookUseCase(
-          name: 'Welcome',
-          builder:
-              _design_system_src_introduction_app_welcome_stories.appWelcome,
-        ),
-      )
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Welcome',
+            builder:
+                _design_system_src_introduction_app_welcome_stories.appWelcome,
+          ),
+        ],
+      ),
     ],
   ),
   _widgetbook.WidgetbookFolder(
@@ -61,7 +65,7 @@ final directories = <_widgetbook.WidgetbookNode>[
                 _design_system_src_widgets_app_button_stories.primaryButton,
           ),
         ],
-      )
+      ),
     ],
   ),
 ];

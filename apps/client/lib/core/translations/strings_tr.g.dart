@@ -37,13 +37,13 @@ class TranslationsTr with BaseTranslations<AppLocale, Translations> implements T
 	TranslationsTr $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsTr(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _TranslationsCommonTr common = _TranslationsCommonTr._(_root);
-	@override late final _TranslationsHomeTr home = _TranslationsHomeTr._(_root);
+	@override late final _Translations$common$tr common = _Translations$common$tr._(_root);
+	@override late final _Translations$home$tr home = _Translations$home$tr._(_root);
 }
 
 // Path: common
-class _TranslationsCommonTr implements TranslationsCommonEn {
-	_TranslationsCommonTr._(this._root);
+class _Translations$common$tr implements Translations$common$en {
+	_Translations$common$tr._(this._root);
 
 	final TranslationsTr _root; // ignore: unused_field
 
@@ -52,8 +52,8 @@ class _TranslationsCommonTr implements TranslationsCommonEn {
 }
 
 // Path: home
-class _TranslationsHomeTr implements TranslationsHomeEn {
-	_TranslationsHomeTr._(this._root);
+class _Translations$home$tr implements Translations$home$en {
+	_Translations$home$tr._(this._root);
 
 	final TranslationsTr _root; // ignore: unused_field
 

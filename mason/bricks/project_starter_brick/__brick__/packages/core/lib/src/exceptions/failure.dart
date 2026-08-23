@@ -35,12 +35,16 @@ part 'failure.freezed.dart';
 /// );
 /// ```
 @freezed
-class Failure with _$Failure {
+sealed class Failure with _$Failure {
   const factory Failure.server(String message, [int? code]) = _ServerFailure;
   const factory Failure.cache(String message, [int? code]) = _CacheFailure;
   const factory Failure.network(String message) = _NetworkFailure;
   const factory Failure.unauthorized(String message) = _UnauthorizedFailure;
   const factory Failure.notFound(String message) = _NotFoundFailure;
-  const factory Failure.validation(String message, [Map<String, dynamic>? errors]) = _ValidationFailure;
-  const factory Failure.unknown(String message, [dynamic error]) = _UnknownFailure;
+  const factory Failure.validation(
+    String message, [
+    Map<String, dynamic>? errors,
+  ]) = _ValidationFailure;
+  const factory Failure.unknown(String message, [dynamic error]) =
+      _UnknownFailure;
 }

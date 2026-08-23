@@ -12,10 +12,7 @@ void main() {
         children: [
           GoldenTestScenario(
             name: 'Default',
-            child: AppButton(
-              text: 'Click Me',
-              onPressed: () {},
-            ),
+            child: AppButton(text: 'Click Me', onPressed: () {}),
           ),
           GoldenTestScenario(
             name: 'Custom Color',

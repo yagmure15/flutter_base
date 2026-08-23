@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WidgetbookShell extends StatelessWidget {
-  const WidgetbookShell({
-    required this.child,
-    this.label,
-    super.key,
-  });
+  const WidgetbookShell({required this.child, this.label, super.key});
 
   final Widget child;
   final String? label;
@@ -16,7 +12,9 @@ class WidgetbookShell extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       padding: const EdgeInsets.all(32),
-      color: Theme.of(context).brightness == Brightness.light ? Colors.grey.shade50 : Colors.grey.shade900,
+      color: Theme.of(context).brightness == Brightness.light
+          ? Colors.grey.shade50
+          : Colors.grey.shade900,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -25,10 +23,10 @@ class WidgetbookShell extends StatelessWidget {
               Text(
                 label!,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Colors.grey,
-                      letterSpacing: 1.2,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Colors.grey,
+                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
             ],

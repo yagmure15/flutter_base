@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 class AppTheme {
   /// Uygulama için TextTheme tanımlaması
   static TextTheme get _textTheme => const TextTheme(
-        displayLarge: AppTypography.displayLarge,
-        displayMedium: AppTypography.displayMedium,
-        displaySmall: AppTypography.displaySmall,
-        headlineLarge: AppTypography.headlineLarge,
-        headlineMedium: AppTypography.headlineMedium,
-        headlineSmall: AppTypography.headlineSmall,
-        titleLarge: AppTypography.titleLarge,
-        titleMedium: AppTypography.titleMedium,
-        titleSmall: AppTypography.titleSmall,
-        bodyLarge: AppTypography.bodyLarge,
-        bodyMedium: AppTypography.bodyMedium,
-        bodySmall: AppTypography.bodySmall,
-        labelLarge: AppTypography.labelLarge,
-        labelMedium: AppTypography.labelMedium,
-        labelSmall: AppTypography.labelSmall,
-      );
+    displayLarge: AppTypography.displayLarge,
+    displayMedium: AppTypography.displayMedium,
+    displaySmall: AppTypography.displaySmall,
+    headlineLarge: AppTypography.headlineLarge,
+    headlineMedium: AppTypography.headlineMedium,
+    headlineSmall: AppTypography.headlineSmall,
+    titleLarge: AppTypography.titleLarge,
+    titleMedium: AppTypography.titleMedium,
+    titleSmall: AppTypography.titleSmall,
+    bodyLarge: AppTypography.bodyLarge,
+    bodyMedium: AppTypography.bodyMedium,
+    bodySmall: AppTypography.bodySmall,
+    labelLarge: AppTypography.labelLarge,
+    labelMedium: AppTypography.labelMedium,
+    labelSmall: AppTypography.labelSmall,
+  );
 
   static ThemeData get lightTheme {
     return ThemeData(

@@ -9,10 +9,7 @@ import '../network/interceptors/auth_interceptor.dart';
 @module
 abstract class NetworkModule {
   @lazySingleton
-  Dio dio(
-    @Named('baseUrl') String baseUrl,
-    AuthInterceptor authInterceptor,
-  ) {
+  Dio dio(@Named('baseUrl') String baseUrl, AuthInterceptor authInterceptor) {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,

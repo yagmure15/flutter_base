@@ -1,0 +1,10 @@
+# slang configuration (https://pub.dev/packages/slang)
+# Generate with: dart run slang   (or `melos run gen` from the workspace root)
+base_locale: en
+input_directory: lib
+input_file_pattern: .i18n.json
+output_directory: lib/core/translations
+output_file_name: strings.g.dart
+namespaces: true
+translate_var: t
+enum_name: AppLocale

@@ -21,7 +21,8 @@ class App extends StatelessWidget {
         builder: (context) {
           return MaterialApp.router(
             title: flavor.title,
-            locale: TranslationProvider.of(context).flutterLocale, // use provider
+            locale: TranslationProvider.of(context)
+                .flutterLocale, // use provider
             supportedLocales: AppLocaleUtils.supportedLocales,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
             debugShowCheckedModeBanner: kDebugMode,
@@ -46,19 +47,18 @@ class App extends StatelessWidget {
     required Widget child,
     required String flavorName,
     bool show = true,
-  }) =>
-      show
-          ? Banner(
-              location: BannerLocation.topStart,
-              message: flavorName,
-              color: Colors.green.withAlpha(150),
-              textStyle: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-                letterSpacing: 1,
-              ),
-              textDirection: TextDirection.ltr,
-              child: child,
-            )
-          : Container(child: child);
+  }) => show
+      ? Banner(
+          location: BannerLocation.topStart,
+          message: flavorName,
+          color: Colors.green.withAlpha(150),
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 12,
+            letterSpacing: 1,
+          ),
+          textDirection: TextDirection.ltr,
+          child: child,
+        )
+      : Container(child: child);
 }

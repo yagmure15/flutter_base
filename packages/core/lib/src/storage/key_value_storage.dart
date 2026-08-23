@@ -46,13 +46,15 @@ class KeyValueStorageImpl implements KeyValueStorage {
   String? getString(String key) => _checkPrefs.getString(key);
 
   @override
-  Future<void> setString(String key, String value) => _checkPrefs.setString(key, value);
+  Future<void> setString(String key, String value) =>
+      _checkPrefs.setString(key, value);
 
   @override
   bool? getBool(String key) => _checkPrefs.getBool(key);
 
   @override
-  Future<void> setBool(String key, {required bool value}) => _checkPrefs.setBool(key, value);
+  Future<void> setBool(String key, {required bool value}) =>
+      _checkPrefs.setBool(key, value);
 
   @override
   int? getInt(String key) => _checkPrefs.getInt(key);
@@ -64,13 +66,15 @@ class KeyValueStorageImpl implements KeyValueStorage {
   double? getDouble(String key) => _checkPrefs.getDouble(key);
 
   @override
-  Future<void> setDouble(String key, double value) => _checkPrefs.setDouble(key, value);
+  Future<void> setDouble(String key, double value) =>
+      _checkPrefs.setDouble(key, value);
 
   @override
   List<String>? getStringList(String key) => _checkPrefs.getStringList(key);
 
   @override
-  Future<void> setStringList(String key, List<String> value) => _checkPrefs.setStringList(key, value);
+  Future<void> setStringList(String key, List<String> value) =>
+      _checkPrefs.setStringList(key, value);
 
   @override
   Future<void> remove(String key) => _checkPrefs.remove(key);

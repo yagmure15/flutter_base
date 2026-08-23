@@ -3,8 +3,5 @@ import 'bootstrap.dart';
 import 'config/app_flavor.dart';
 
 void main() {
-  bootstrap(
-    builder: () => const App(),
-    environment: Env.prod,
-  );
+  bootstrap(builder: () => const App(), environment: Env.prod);
 }

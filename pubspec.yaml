@@ -2,10 +2,10 @@ name: flutter_base_workspace
 description: A workspace for flutter_base.
 publish_to: 'none'
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.13.1
 
 dev_dependencies:
   flutter_base_core:
     path: packages/core
-  flutter_lints: ^5.0.0
-  melos: ^6.3.1
+  flutter_lints: ^6.0.0
+  melos: ^6.3.3

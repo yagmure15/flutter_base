@@ -66,7 +66,8 @@ mixin NetworkHandlerMixin {
 
     if (data is Map<String, dynamic>) {
       // Customize this based on backend error format
-      message = (data['message'] as String?) ?? (data['error'] as String?) ?? message;
+      message =
+          (data['message'] as String?) ?? (data['error'] as String?) ?? message;
     }
 
     if (statusCode == 401) {

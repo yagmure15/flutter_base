@@ -7,9 +7,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   print('Running Alchemist tests...');
   return AlchemistConfig.runWithConfig(
     config: const AlchemistConfig(
-      platformGoldensConfig: PlatformGoldensConfig(
-        enabled: true,
-      ),
+      platformGoldensConfig: PlatformGoldensConfig(enabled: true),
     ),
     run: testMain,
   );

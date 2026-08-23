@@ -57,9 +57,21 @@ void main() async {
 
   // Mason '.' ile başlayan dosyaları bazen atlayabiliyor, o yüzden 'dot.' öneki kullanıyoruz
   // post_gen hook'unda bunları geri çevireceğiz.
-  File('$envPath/dot.env.dev').writeAsStringSync('BASE_URL=https://dev.api.example.com\nKEY=dev_key');
-  File('$envPath/dot.env.staging').writeAsStringSync('BASE_URL=https://staging.api.example.com\nKEY=staging_key');
-  File('$envPath/dot.env.prod').writeAsStringSync('BASE_URL=https://api.example.com\nKEY=prod_key');
+  File('$envPath/dot.env.dev')
+      .writeAsStringSync('BASE_URL=https://dev.api.example.com\nKEY=dev_key');
+  File('$envPath/dot.env.staging').writeAsStringSync(
+    'BASE_URL=https://staging.api.example.com\nKEY=staging_key',
+  );
+  File('$envPath/dot.env.prod')
+      .writeAsStringSync('BASE_URL=https://api.example.com\nKEY=prod_key');
+
+  // .fvmrc dosyasını da 'dot.' önekiyle kopyala; post_gen hook'u geri çevirir.
+  // Böylece üretilen proje, şablonla aynı Flutter SDK sürümüne sabitlenir.
+  final fvmrc = File('.fvmrc');
+  if (fvmrc.existsSync()) {
+    logger.info('📌 .fvmrc kopyalanıyor (dot.fvmrc)...');
+    fvmrc.copySync('${targetDir.path}/dot.fvmrc');
+  }
 
   logger
     ..info('✅ İşlem tamamlandı! Brick kullanıma hazır.')
@@ -69,9 +81,18 @@ void main() async {
 Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
   await for (final entity in source.list(followLinks: false)) {
     final entityName = entity.uri.pathSegments.where((e) => e.isNotEmpty).last;
+    // 'ios/Pods' gibi iç içe yolları da eşleştirebilmek için "ebeveyn/ad" formu
+    final parentSegments = entity.parent.uri.pathSegments
+        .where((e) => e.isNotEmpty)
+        .toList();
+    final nestedName = parentSegments.isEmpty
+        ? entityName
+        : '${parentSegments.last}/$entityName';
 
     // Yoksayılanları atla
-    if (ignoredPaths.contains(entityName) || entityName.startsWith('.')) {
+    if (ignoredPaths.contains(entityName) ||
+        ignoredPaths.contains(nestedName) ||
+        entityName.startsWith('.')) {
       continue;
     }
 
@@ -85,7 +106,10 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
     }
 
     // Dosya/Klasör isminde proje adı varsa onu {{name}} değişkenine çevir
-    final newName = entityName.replaceAll(originalProjectName, '{{name.snakeCase()}}');
+    final newName = entityName.replaceAll(
+      originalProjectName,
+      '{{name.snakeCase()}}',
+    );
     final newPath = '${destination.path}/$newName';
 
     try {
@@ -102,7 +126,11 @@ Future<void> _copyAndTemplatize(Directory source, Directory destination) async {
         await _processFile(entity, File(newPath));
       }
     } catch (e, st) {
-      logger.error('❌ Error processing ${entity.path}: $e', error: e, stackTrace: st);
+      logger.error(
+        '❌ Error processing ${entity.path}: $e',
+        error: e,
+        stackTrace: st,
+      );
     }
   }
 }
@@ -132,6 +160,19 @@ Future<void> _processFile(File sourceFile, File targetFile) async {
 
 bool _isBinary(String path) {
   final ext = path.split('.').last.toLowerCase();
-  return ['png', 'jpg', 'jpeg', 'gif', 'ico', 'webp', 'ttf', 'otf', 'pdf', 'jar', 'keystore', 'jks', 'svg']
-      .contains(ext);
+  return [
+    'png',
+    'jpg',
+    'jpeg',
+    'gif',
+    'ico',
+    'webp',
+    'ttf',
+    'otf',
+    'pdf',
+    'jar',
+    'keystore',
+    'jks',
+    'svg',
+  ].contains(ext);
 }

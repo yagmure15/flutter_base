@@ -22,9 +22,7 @@ Future<void> bootstrap({
       );
 
       /// Setup DI
-      await configureDependencies(
-        environment: environment,
-      );
+      await configureDependencies(environment: environment);
       final monitoringService = getIt<MonitoringService>();
       await monitoringService.initialize();
 
@@ -42,11 +40,7 @@ Future<void> bootstrap({
     },
     (error, stackTrace) {
       log(error.toString(), stackTrace: stackTrace);
-      getIt<MonitoringService>().recordError(
-        error,
-        stackTrace,
-        fatal: true,
-      );
+      getIt<MonitoringService>().recordError(error, stackTrace, fatal: true);
     },
   );
 }

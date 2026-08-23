@@ -43,18 +43,38 @@ abstract class AppInsets {
   static const EdgeInsets allXl = EdgeInsets.all(AppSpacing.xl);
 
   // Horizontal only
-  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(horizontal: AppSpacing.xs);
-  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(horizontal: AppSpacing.sm);
-  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(horizontal: AppSpacing.md);
-  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(horizontal: AppSpacing.lg);
-  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(horizontal: AppSpacing.xl);
+  static const EdgeInsets horizontalXs = EdgeInsets.symmetric(
+    horizontal: AppSpacing.xs,
+  );
+  static const EdgeInsets horizontalSm = EdgeInsets.symmetric(
+    horizontal: AppSpacing.sm,
+  );
+  static const EdgeInsets horizontalMd = EdgeInsets.symmetric(
+    horizontal: AppSpacing.md,
+  );
+  static const EdgeInsets horizontalLg = EdgeInsets.symmetric(
+    horizontal: AppSpacing.lg,
+  );
+  static const EdgeInsets horizontalXl = EdgeInsets.symmetric(
+    horizontal: AppSpacing.xl,
+  );
 
   // Vertical only
-  static const EdgeInsets verticalXs = EdgeInsets.symmetric(vertical: AppSpacing.xs);
-  static const EdgeInsets verticalSm = EdgeInsets.symmetric(vertical: AppSpacing.sm);
-  static const EdgeInsets verticalMd = EdgeInsets.symmetric(vertical: AppSpacing.md);
-  static const EdgeInsets verticalLg = EdgeInsets.symmetric(vertical: AppSpacing.lg);
-  static const EdgeInsets verticalXl = EdgeInsets.symmetric(vertical: AppSpacing.xl);
+  static const EdgeInsets verticalXs = EdgeInsets.symmetric(
+    vertical: AppSpacing.xs,
+  );
+  static const EdgeInsets verticalSm = EdgeInsets.symmetric(
+    vertical: AppSpacing.sm,
+  );
+  static const EdgeInsets verticalMd = EdgeInsets.symmetric(
+    vertical: AppSpacing.md,
+  );
+  static const EdgeInsets verticalLg = EdgeInsets.symmetric(
+    vertical: AppSpacing.lg,
+  );
+  static const EdgeInsets verticalXl = EdgeInsets.symmetric(
+    vertical: AppSpacing.xl,
+  );
 }
 
 /// Boşluk widget'ı - Row ve Column içinde kullanım için.

@@ -25,12 +25,12 @@ void main() {
           expect(msg, 'Server Failure');
           expect(code, 404);
         },
-        cache: (_, __) => fail('Should be server'),
+        cache: (_, _) => fail('Should be server'),
         network: (_) => fail('Should be server'),
         unauthorized: (_) => fail('Should be server'),
         notFound: (_) => fail('Should be server'),
-        validation: (_, __) => fail('Should be server'),
-        unknown: (_, __) => fail('Should be server'),
+        validation: (_, _) => fail('Should be server'),
+        unknown: (_, _) => fail('Should be server'),
       );
     });
 
@@ -38,10 +38,7 @@ void main() {
       const failure = Failure.network('No Connection');
       expect(failure, isA<Failure>());
       expect(
-        failure.maybeWhen(
-          network: (msg) => msg,
-          orElse: () => null,
-        ),
+        failure.maybeWhen(network: (msg) => msg, orElse: () => null),
         'No Connection',
       );
     });

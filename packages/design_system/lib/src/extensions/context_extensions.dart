@@ -33,23 +33,32 @@ extension AppTypographyExtension on BuildContext {
   TextTheme get typography => Theme.of(this).textTheme;
 
   /// Text stili üzerine renk uygulamak için yardımcı
-  TextStyle? headlineLarge({Color? color}) => typography.headlineLarge?.copyWith(color: color);
+  TextStyle? headlineLarge({Color? color}) =>
+      typography.headlineLarge?.copyWith(color: color);
 
-  TextStyle? headlineMedium({Color? color}) => typography.headlineMedium?.copyWith(color: color);
+  TextStyle? headlineMedium({Color? color}) =>
+      typography.headlineMedium?.copyWith(color: color);
 
-  TextStyle? headlineSmall({Color? color}) => typography.headlineSmall?.copyWith(color: color);
+  TextStyle? headlineSmall({Color? color}) =>
+      typography.headlineSmall?.copyWith(color: color);
 
-  TextStyle? titleLarge({Color? color}) => typography.titleLarge?.copyWith(color: color);
+  TextStyle? titleLarge({Color? color}) =>
+      typography.titleLarge?.copyWith(color: color);
 
-  TextStyle? titleMedium({Color? color}) => typography.titleMedium?.copyWith(color: color);
+  TextStyle? titleMedium({Color? color}) =>
+      typography.titleMedium?.copyWith(color: color);
 
-  TextStyle? bodyLarge({Color? color}) => typography.bodyLarge?.copyWith(color: color);
+  TextStyle? bodyLarge({Color? color}) =>
+      typography.bodyLarge?.copyWith(color: color);
 
-  TextStyle? bodyMedium({Color? color}) => typography.bodyMedium?.copyWith(color: color);
+  TextStyle? bodyMedium({Color? color}) =>
+      typography.bodyMedium?.copyWith(color: color);
 
-  TextStyle? bodySmall({Color? color}) => typography.bodySmall?.copyWith(color: color);
+  TextStyle? bodySmall({Color? color}) =>
+      typography.bodySmall?.copyWith(color: color);
 
-  TextStyle? labelLarge({Color? color}) => typography.labelLarge?.copyWith(color: color);
+  TextStyle? labelLarge({Color? color}) =>
+      typography.labelLarge?.copyWith(color: color);
 }
 
 /// Spacing değerlerine erişim için extension.

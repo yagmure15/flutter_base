@@ -3,10 +3,7 @@ import 'package:design_system/src/widgetbook_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(
-  name: 'Primary',
-  type: AppButton,
-)
+@widgetbook.UseCase(name: 'Primary', type: AppButton)
 Widget primaryButton(BuildContext context) {
   return const WidgetbookShell(
     label: 'Primary Button',
@@ -17,10 +14,7 @@ Widget primaryButton(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(
-  name: 'Colored',
-  type: AppButton,
-)
+@widgetbook.UseCase(name: 'Colored', type: AppButton)
 Widget coloredButton(BuildContext context) {
   return WidgetbookShell(
     label: 'Colored Button',

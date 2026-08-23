@@ -12,10 +12,7 @@ class AppWelcome extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF1A1A1A),
-              Color(0xFF2D2D2D),
-            ],
+            colors: [Color(0xFF1A1A1A), Color(0xFF2D2D2D)],
           ),
         ),
         child: Center(
@@ -45,10 +42,10 @@ class AppWelcome extends StatelessWidget {
               Text(
                 'Flutter Base UI',
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: -1.0,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: -1.0,
+                ),
               ),
               const SizedBox(height: 16),
 
@@ -56,9 +53,9 @@ class AppWelcome extends StatelessWidget {
               Text(
                 'A Premium Design System Toolkit',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w300,
-                    ),
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               const SizedBox(height: 48),
 
@@ -111,9 +108,7 @@ class _InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.1),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Column(
         children: [

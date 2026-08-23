@@ -124,23 +124,38 @@ final granted = await getIt<PermissionService>().requestPermission(Permission.ca
 
 Bu proje bir **Monorepo** yapısındadır (Melos ile yönetilir). Yani `apps/` altında uygulamalar, `packages/` altında ortak kütüphaneler bulunur.
 
+### Flutter SDK (FVM)
+
+Proje, Flutter SDK sürümünü [FVM](https://fvm.app) ile sabitler (`.fvmrc` → **Flutter 3.47.1 / Dart 3.13.1**).
+Tüm `pubspec.yaml` dosyalarındaki `environment.sdk` constraint'i de bu sürüme göre (`^3.13.1`) ayarlanmıştır.
+
+```bash
+dart pub global activate fvm   # FVM yoksa
+fvm install                    # .fvmrc içindeki sürümü kurar
+```
+
+> **Not:** Melos, `flutter` / `dart` komutlarını `PATH` üzerinden çalıştırır. Global FVM sürümünüz
+> projeninkinden farklıysa melos komutlarını `fvm exec` ile çalıştırın (örn. `fvm exec melos bootstrap`),
+> tekil komutlar için `fvm flutter ...` / `fvm dart ...` kullanın.
+
 ### Hazırlık (Setup)
 
 Projeyi ilk kez indirdiğinizde bağımlılıkları kurmak ve bağlamak için:
 
 ```bash
-melos bootstrap
+fvm exec melos bootstrap
 ```
-*Alternatif:* Kök dizinde `flutter pub get` çalıştırılabilir ancak Melos kullanmak daha sağlıklıdır.
+*Alternatif:* Kök dizinde `fvm flutter pub get` çalıştırılabilir ancak Melos kullanmak daha sağlıklıdır.
 
 ### Sık Kullanılan Komutlar
 
 Melos sayesinde kök dizinden tüm paketleri yönetebilirsiniz:
 
-- **Kod Üretimi (Build Runner):** Tüm paketlerde `build_runner` çalıştırır.
+- **Kod Üretimi:** Önce `slang` çevirilerini (`dart run slang`), ardından tüm paketlerde `build_runner`'ı çalıştırır.
   ```bash
   melos run gen
   ```
+  Adımları ayrı ayrı çalıştırmak için: `melos run gen:slang` ve `melos run gen:build_runner`.
 - **Analiz:** Kod kalitesini kontrol eder.
   ```bash
   melos run analyze

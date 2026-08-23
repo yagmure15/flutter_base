@@ -10,7 +10,8 @@ part 'test_feature_state.dart';
 
 @injectable
 class TestFeatureCubit extends Cubit<TestFeatureState> {
-  TestFeatureCubit(this._getTestFeature) : super(const TestFeatureState.initial());
+  TestFeatureCubit(this._getTestFeature)
+    : super(const TestFeatureState.initial());
 
   final GetTestFeature _getTestFeature;
 

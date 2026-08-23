@@ -15,7 +15,7 @@ class {{name.pascalCase()}}RepositoryImpl implements {{name.pascalCase()}}Reposi
   Future<Either<Failure, {{name.pascalCase()}}>> get{{name.pascalCase()}}() async {
     try {
       final result = await _remoteDataSource.get{{name.pascalCase()}}();
-      return Right(result);
+      return Right(result.toEntity());
     } catch (e) {
       return Left(Failure.server(e.toString()));
     }

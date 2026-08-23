@@ -40,10 +40,8 @@ linter:
     - avoid_init_to_null
     - avoid_js_rounded_ints
     - avoid_multiple_declarations_per_line
-    - avoid_null_checks_in_equality_operators
     - avoid_positional_boolean_parameters: false
     - avoid_print
-    - avoid_private_typedef_functions
     - avoid_redundant_argument_values: false
     - avoid_renaming_method_parameters
     - prefer_relative_imports
@@ -167,7 +165,6 @@ linter:
     - type_init_formals
     - type_literal_in_constant_pattern
     - unawaited_futures
-    - unnecessary_await_in_return
     - unnecessary_breaks
     - unnecessary_brace_in_string_interps
     - unnecessary_const
@@ -197,7 +194,6 @@ linter:
     - use_enums
     - use_full_hex_values_for_flutter_colors
     - use_function_type_syntax_for_parameters
-    - use_if_null_to_convert_nulls_to_bools
     - use_is_even_rather_than_modulo
     - use_key_in_widget_constructors
     - use_late_for_private_fields_and_variables

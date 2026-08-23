@@ -15,9 +15,8 @@ class ColorPalette extends StatelessWidget {
         children: [
           Text(
             'Core Colors',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           const _ColorGrid(
@@ -34,9 +33,8 @@ class ColorPalette extends StatelessWidget {
           const SizedBox(height: 32),
           Text(
             'Grey Scale',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(context).textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           const _ColorGrid(
@@ -106,10 +104,7 @@ class _ColorCard extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: Colors.black.withAlpha(10),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.black.withAlpha(10), width: 1),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -139,10 +134,7 @@ class _ColorCard extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  name: 'Palette',
-  type: ColorPalette,
-)
+@widgetbook.UseCase(name: 'Palette', type: ColorPalette)
 Widget colorPalette(BuildContext context) {
   return const ColorPalette();
 }
