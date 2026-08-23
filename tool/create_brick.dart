@@ -16,6 +16,7 @@ final logger = Logger();
 // Konfigürasyon
 const String originalProjectName = 'flutter_base';
 const String targetBrickPath = 'mason/bricks/project_starter_brick/__brick__';
+const String originalClientPath = 'apps/client';
 
 // Yoksayılacak dosya ve klasörler
 const Set<String> ignoredPaths = {
@@ -64,6 +65,12 @@ void main() async {
   );
   File('$envPath/dot.env.prod')
       .writeAsStringSync('BASE_URL=https://api.example.com\nKEY=prod_key');
+
+  // .env.example de (dotfile olduğu için) aynı 'dot.' önekiyle kopyalanır.
+  final envExample = File('$originalClientPath/.env.example');
+  if (envExample.existsSync()) {
+    envExample.copySync('$envPath/dot.env.example');
+  }
 
   // .fvmrc dosyasını da 'dot.' önekiyle kopyala; post_gen hook'u geri çevirir.
   // Böylece üretilen proje, şablonla aynı Flutter SDK sürümüne sabitlenir.
@@ -148,6 +155,8 @@ Future<void> _processFile(File sourceFile, File targetFile) async {
     // İçerikteki değişiklikleri yap
     content = content.replaceAll('flutter_base', '{{name.snakeCase()}}');
     content = content.replaceAll('Flutter Base', '{{name.titleCase()}}');
+    // Örn. injectable micro package sınıfı: FlutterBaseCorePackageModule
+    content = content.replaceAll('FlutterBase', '{{name.pascalCase()}}');
 
     targetFile.createSync(recursive: true);
     await targetFile.writeAsString(content);

@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Service to handle device permissions.
 /// Abstraction over permission_handler to make it testable and centralized.
+@lazySingleton
 class PermissionService {
   /// Request a specific permission.
   Future<bool> requestPermission(Permission permission) async {

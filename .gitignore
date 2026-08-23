@@ -47,6 +47,8 @@ app.*.map.json
 .env.dev
 .env.staging
 .env.prod
+# envied output contains the (obfuscated) secrets - regenerate with `melos run gen`
+**/lib/env/*.g.dart
 
 # FVM Version Cache
 .fvm/

@@ -25,6 +25,14 @@ jobs:
       - name: Bootstrap Workspace
         run: melos bootstrap
 
+      - name: Prepare .env files
+        # Real secrets are git-ignored; the placeholder values from .env.example
+        # are enough for code generation and analysis in CI.
+        run: |
+          for env in dev staging prod; do
+            cp apps/client/.env.example "apps/client/.env.$env"
+          done
+
       - name: Generate Code
         run: melos run gen
 

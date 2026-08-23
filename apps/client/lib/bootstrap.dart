@@ -17,9 +17,7 @@ Future<void> bootstrap({
     () async {
       /// Initialize Flutter
       WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      await _initializeFirebase();
 
       /// Setup DI
       await configureDependencies(environment: environment);
@@ -40,7 +38,29 @@ Future<void> bootstrap({
     },
     (error, stackTrace) {
       log(error.toString(), stackTrace: stackTrace);
-      getIt<MonitoringService>().recordError(error, stackTrace, fatal: true);
+      if (getIt.isRegistered<MonitoringService>()) {
+        getIt<MonitoringService>().recordError(error, stackTrace, fatal: true);
+      }
     },
   );
+}
+
+/// Initializes Firebase if it has been configured for the current platform.
+///
+/// Until `flutterfire configure` has been run, [DefaultFirebaseOptions] throws
+/// an [UnsupportedError]; in that case the app keeps running and
+/// `MonitoringService` falls back to console logging.
+Future<void> _initializeFirebase() async {
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    // The FlutterFire placeholder throws an Error (not an Exception) when the
+    // platform has not been configured yet, so it has to be caught here.
+    // ignore: avoid_catching_errors
+  } on UnsupportedError catch (e) {
+    log('Firebase is not configured for this platform, skipping: ${e.message}');
+  } on Exception catch (e, stackTrace) {
+    log('Firebase initialization failed: $e', stackTrace: stackTrace);
+  }
 }

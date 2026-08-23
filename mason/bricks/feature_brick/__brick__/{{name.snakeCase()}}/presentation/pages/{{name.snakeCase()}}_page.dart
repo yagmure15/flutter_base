@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/dependency/di.dart';
+import '../../../../core/translations/strings.g.dart';
 import '../bloc/{{name.snakeCase()}}_cubit.dart';
 
 @RoutePage()
@@ -14,7 +15,7 @@ class {{name.pascalCase()}}Page extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<{{name.pascalCase()}}Cubit>()..started(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('{{name.titleCase()}}')),
+        appBar: AppBar(title: Text(t.{{name.camelCase()}}.title)),
         body: BlocBuilder<{{name.pascalCase()}}Cubit, {{name.pascalCase()}}State>(
           builder: (context, state) {
             return state.when(

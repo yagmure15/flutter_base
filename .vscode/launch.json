@@ -5,28 +5,36 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_base",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "client",
-            "cwd": "apps/client",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "client (profile mode)",
+            "name": "client (dev)",
             "cwd": "apps/client",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "program": "lib/main_dev.dart",
+            "args": ["--flavor", "dev"]
         },
         {
-            "name": "client (release mode)",
+            "name": "client (staging)",
             "cwd": "apps/client",
             "request": "launch",
             "type": "dart",
+            "program": "lib/main_staging.dart",
+            "args": ["--flavor", "staging"]
+        },
+        {
+            "name": "client (prod)",
+            "cwd": "apps/client",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
+            "args": ["--flavor", "prod"]
+        },
+        {
+            "name": "client (prod, release mode)",
+            "cwd": "apps/client",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
+            "args": ["--flavor", "prod"],
             "flutterMode": "release"
         },
         {
@@ -45,46 +53,6 @@
         {
             "name": "widgetbook (release mode)",
             "cwd": "apps/widgetbook",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "app_ui",
-            "cwd": "packages/app_ui",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "app_ui (profile mode)",
-            "cwd": "packages/app_ui",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "app_ui (release mode)",
-            "cwd": "packages/app_ui",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "core",
-            "cwd": "packages/core",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "core (profile mode)",
-            "cwd": "packages/core",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "core (release mode)",
-            "cwd": "packages/core",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

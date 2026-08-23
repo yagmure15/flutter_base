@@ -9,7 +9,7 @@ abstract class {{name.pascalCase()}}RemoteDataSource {
 class {{name.pascalCase()}}RemoteDataSourceImpl implements {{name.pascalCase()}}RemoteDataSource {
   @override
   Future<{{name.pascalCase()}}Model> get{{name.pascalCase()}}() async {
-    // TODO: Implement API call
+    // TODO(developer): Implement the API call.
     return const {{name.pascalCase()}}Model(id: '1');
   }
 }

@@ -147,6 +147,42 @@ fvm exec melos bootstrap
 ```
 *Alternatif:* Kök dizinde `fvm flutter pub get` çalıştırılabilir ancak Melos kullanmak daha sağlıklıdır.
 
+### Ortam Değişkenleri (.env)
+
+`apps/client` altındaki `.env.dev`, `.env.staging`, `.env.prod` dosyaları **git'e girmez**; şablon olarak
+`.env.example` kullanılır. Kod üretiminden (`melos run gen`) önce oluşturun:
+
+```bash
+cd apps/client
+cp .env.example .env.dev && cp .env.example .env.staging && cp .env.example .env.prod
+```
+
+Değerler `envied` ile (`obfuscate: true`) `lib/env/env_*.g.dart` dosyalarına derlenir; bu dosyalar da
+git-ignore'dadır ve `melos run gen` ile yeniden üretilir. CI, `.env.example`'ı kopyalayarak çalışır.
+
+### Firebase
+
+`lib/config/firebase_options.dart` FlutterFire placeholder'ıdır. Firebase'i etkinleştirmek için:
+
+```bash
+cd apps/client && flutterfire configure
+```
+
+Yapılandırılana kadar uygulama yine açılır; `MonitoringService` konsola log yazan
+`LoggerMonitoringService`'e düşer (Analytics/Crashlytics devre dışı).
+
+### Flavor'lar (dev / staging / prod)
+
+Her ortamın kendi Dart giriş noktası (`lib/main_<flavor>.dart`), Android `productFlavor`'ı
+(`com.example.flutter_base.dev` gibi `applicationIdSuffix` + kendi `app_name`'i + `src/<flavor>/res` ikonları)
+ve iOS scheme'i vardır. Her zaman `--flavor` ile çalıştırın (VS Code launch config'leri hazır):
+
+```bash
+cd apps/client
+fvm flutter run --flavor dev -t lib/main_dev.dart
+fvm flutter build apk --flavor prod -t lib/main_prod.dart
+```
+
 ### Sık Kullanılan Komutlar
 
 Melos sayesinde kök dizinden tüm paketleri yönetebilirsiniz:
@@ -180,15 +216,23 @@ Projeye yeni bir özellik eklerken manuel dosya oluşturmak yerine **Mason** kul
    dart pub global activate mason_cli
    ```
 
-2. **Feature Brick'ini Ekle:**
-   Proje içindeki `project_starter_brick` şablonunu kullanabilirsiniz. (Genelde `mason add` ile eklenir).
+2. **Brick'leri Yükle:**
+   Kök dizindeki `mason.yaml` `feature_brick`'i tanımlar; tek seferlik:
+   ```bash
+   mason get
+   ```
 
 3. **Yeni Feature Oluştur:**
-   Örneğin `settings` adında bir özellik eklemek için:
+   Örneğin `settings` adında bir özellik eklemek için (kök dizinden):
    ```bash
-   mason make feature_brick --name settings
+   mason make feature_brick --name settings -o apps/client/lib/features
+   fvm exec melos run gen
    ```
-   Bu komut `lib/features/settings` altına gerekli tüm Clean Architecture dosyalarını (Repository, UseCase, Cubit, Page) oluşturacaktır.
+   Bu komut `apps/client/lib/features/settings` altına Clean Architecture dosyalarını
+   (Model + `toEntity()`, Repository, UseCase, Cubit/State, Page) ve slang çeviri dosyalarını
+   (`presentation/translations/settings_en.i18n.json`, `settings_tr.i18n.json` → `t.settings.title`) oluşturur.
+   `post_gen` hook'u sayfayı `core/router/app_router.dart`'a (import + `AutoRoute`) otomatik kaydeder;
+   DI kaydı `@injectable` anotasyonları sayesinde `melos run gen` ile gelir.
 
 ---
 

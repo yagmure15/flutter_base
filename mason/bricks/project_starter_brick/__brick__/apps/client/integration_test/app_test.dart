@@ -1,4 +1,5 @@
-import 'package:{{name.snakeCase()}}/main.dart' as app;
+import 'package:flutter/material.dart';
+import 'package:{{name.snakeCase()}}/main_dev.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -6,15 +7,13 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('end-to-end test', () {
-    testWidgets('tap on the floating action button, verify counter', (
-      tester,
-    ) async {
+    testWidgets('boots the dev flavor and shows the home page', (tester) async {
       app.main();
       await tester.pumpAndSettle();
 
-      // Find any widget to verify app launched.
-      // Since we don't know the exact UI, just pumping and settling without error is a good start.
-      expect(find.byType(Exception), findsNothing);
+      // bootstrap() completed: DI resolved, router built, HomePage rendered.
+      expect(find.byType(MaterialApp), findsOneWidget);
+      expect(find.text('{{name.titleCase()}} Dev'), findsOneWidget);
     });
   });
 }

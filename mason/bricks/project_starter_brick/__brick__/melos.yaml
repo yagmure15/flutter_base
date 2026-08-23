@@ -42,8 +42,8 @@ scripts:
 
   gen:
     run: |
-      melos run gen:slang && melos run gen:build_runner
-    description: "Generate code for all packages (slang first, then build_runner)"
+      melos run gen:slang && melos run gen:build_runner && melos run format
+    description: "Generate code for all packages (slang, build_runner) and format the output"
 
   gen:slang:
     run: |

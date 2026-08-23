@@ -33,6 +33,35 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    buildFeatures {
+        // Needed for the per-flavor `resValue` entries below (off by default since AGP 8).
+        resValues = true
+    }
+
+    // Flavors mirror the Dart entrypoints (lib/main_<flavor>.dart) and the iOS
+    // schemes (dev / staging / prod). Always build with `--flavor <name>`, e.g.
+    //   flutter run --flavor dev -t lib/main_dev.dart
+    // Flavor-specific resources (icons etc.) live in src/<flavor>/res.
+    flavorDimensions += ["environment"]
+    productFlavors {
+        dev {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue "string", "app_name", "Flutter Base Dev"
+        }
+        staging {
+            dimension = "environment"
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            resValue "string", "app_name", "Flutter Base Staging"
+        }
+        prod {
+            dimension = "environment"
+            resValue "string", "app_name", "Flutter Base"
+        }
+    }
 }
 
 kotlin {
