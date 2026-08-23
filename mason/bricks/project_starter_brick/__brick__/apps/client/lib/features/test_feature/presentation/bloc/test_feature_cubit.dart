@@ -1,3 +1,4 @@
+import 'package:{{name.snakeCase()}}_core/{{name.snakeCase()}}_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -18,9 +19,11 @@ class TestFeatureCubit extends Cubit<TestFeatureState> {
   Future<void> started() async {
     emit(const TestFeatureState.loading());
     final result = await _getTestFeature();
-    result.fold(
-      (failure) => emit(TestFeatureState.error(failure.toString())),
-      (data) => emit(TestFeatureState.success(data)),
-    );
+    switch (result) {
+      case Success(:final data):
+        emit(TestFeatureState.success(data));
+      case FailureResult(:final failure):
+        emit(TestFeatureState.error(failure));
+    }
   }
 }

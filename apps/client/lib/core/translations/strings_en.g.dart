@@ -41,6 +41,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 	late final Translations$common$en common = Translations$common$en._(_root);
+	late final Translations$errors$en errors = Translations$errors$en._(_root);
 	late final Translations$home$en home = Translations$home$en._(_root);
 }
 
@@ -54,6 +55,42 @@ class Translations$common$en {
 
 	/// en: 'Error'
 	String get error => 'Error';
+}
+
+// Path: errors
+class Translations$errors$en {
+	Translations$errors$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Please check your internet connection and try again.'
+	String get network => 'Please check your internet connection and try again.';
+
+	/// en: 'Something went wrong on our side. Please try again later.'
+	String get server => 'Something went wrong on our side. Please try again later.';
+
+	/// en: 'Your session has expired. Please sign in again.'
+	String get unauthorized => 'Your session has expired. Please sign in again.';
+
+	/// en: 'You don't have permission to perform this action.'
+	String get forbidden => 'You don\'t have permission to perform this action.';
+
+	/// en: 'The requested resource could not be found.'
+	String get notFound => 'The requested resource could not be found.';
+
+	/// en: 'Please check your input and try again.'
+	String get validation => 'Please check your input and try again.';
+
+	/// en: 'Local data could not be read. Please try again.'
+	String get cache => 'Local data could not be read. Please try again.';
+
+	/// en: 'The request was canceled.'
+	String get canceled => 'The request was canceled.';
+
+	/// en: 'An unexpected error occurred. Please try again.'
+	String get unknown => 'An unexpected error occurred. Please try again.';
 }
 
 // Path: home
@@ -77,6 +114,15 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'common.error' => 'Error',
+			'errors.network' => 'Please check your internet connection and try again.',
+			'errors.server' => 'Something went wrong on our side. Please try again later.',
+			'errors.unauthorized' => 'Your session has expired. Please sign in again.',
+			'errors.forbidden' => 'You don\'t have permission to perform this action.',
+			'errors.notFound' => 'The requested resource could not be found.',
+			'errors.validation' => 'Please check your input and try again.',
+			'errors.cache' => 'Local data could not be read. Please try again.',
+			'errors.canceled' => 'The request was canceled.',
+			'errors.unknown' => 'An unexpected error occurred. Please try again.',
 			'home.hello' => ({required Object name}) => 'Hello ${name}',
 			_ => null,
 		};

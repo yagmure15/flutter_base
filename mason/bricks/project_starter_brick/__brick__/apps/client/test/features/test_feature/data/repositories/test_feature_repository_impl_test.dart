@@ -25,26 +25,18 @@ void main() {
 
       final result = await repository.getTestFeature();
 
-      expect(result.isRight(), isTrue);
-      result.fold(
-        (failure) => fail('Expected Right, got $failure'),
-        (entity) => expect(entity, const TestFeature(id: '42')),
-      );
+      expect(result, const Success(TestFeature(id: '42')));
     });
 
-    test('returns a server failure when the data source throws', () async {
+    test('converts data source exceptions into failures', () async {
       when(() => dataSource.getTestFeature())
           .thenThrow(const ServerException(message: 'down', code: 503));
 
       final result = await repository.getTestFeature();
 
-      expect(result.isLeft(), isTrue);
-      result.fold(
-        (failure) => expect(
-          failure.maybeWhen(server: (_, _) => true, orElse: () => false),
-          isTrue,
-        ),
-        (entity) => fail('Expected Left, got $entity'),
+      expect(
+        result,
+        const FailureResult<TestFeature>(Failure.server('down', 503)),
       );
     });
   });

@@ -38,6 +38,7 @@ class TranslationsTr with BaseTranslations<AppLocale, Translations> implements T
 
 	// Translations
 	@override late final _Translations$common$tr common = _Translations$common$tr._(_root);
+	@override late final _Translations$errors$tr errors = _Translations$errors$tr._(_root);
 	@override late final _Translations$home$tr home = _Translations$home$tr._(_root);
 }
 
@@ -49,6 +50,24 @@ class _Translations$common$tr implements Translations$common$en {
 
 	// Translations
 	@override String get error => 'Hata';
+}
+
+// Path: errors
+class _Translations$errors$tr implements Translations$errors$en {
+	_Translations$errors$tr._(this._root);
+
+	final TranslationsTr _root; // ignore: unused_field
+
+	// Translations
+	@override String get network => 'İnternet bağlantınızı kontrol edip tekrar deneyin.';
+	@override String get server => 'Sunucu tarafında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+	@override String get unauthorized => 'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.';
+	@override String get forbidden => 'Bu işlem için yetkiniz yok.';
+	@override String get notFound => 'İstenen kaynak bulunamadı.';
+	@override String get validation => 'Lütfen girdiğiniz bilgileri kontrol edin.';
+	@override String get cache => 'Yerel veriler okunamadı. Lütfen tekrar deneyin.';
+	@override String get canceled => 'İstek iptal edildi.';
+	@override String get unknown => 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.';
 }
 
 // Path: home
@@ -70,6 +89,15 @@ extension on TranslationsTr {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'common.error' => 'Hata',
+			'errors.network' => 'İnternet bağlantınızı kontrol edip tekrar deneyin.',
+			'errors.server' => 'Sunucu tarafında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.',
+			'errors.unauthorized' => 'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.',
+			'errors.forbidden' => 'Bu işlem için yetkiniz yok.',
+			'errors.notFound' => 'İstenen kaynak bulunamadı.',
+			'errors.validation' => 'Lütfen girdiğiniz bilgileri kontrol edin.',
+			'errors.cache' => 'Yerel veriler okunamadı. Lütfen tekrar deneyin.',
+			'errors.canceled' => 'İstek iptal edildi.',
+			'errors.unknown' => 'Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.',
 			'home.hello' => ({required Object name}) => 'Merhaba ${name}',
 			_ => null,
 		};

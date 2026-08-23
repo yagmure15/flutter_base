@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_base_core/flutter_base_core.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,12 +12,10 @@ class TestFeatureRepositoryImpl implements TestFeatureRepository {
   final TestFeatureRemoteDataSource _remoteDataSource;
 
   @override
-  Future<Either<Failure, TestFeature>> getTestFeature() async {
-    try {
-      final result = await _remoteDataSource.getTestFeature();
-      return Right(result.toEntity());
-    } catch (e) {
-      return Left(Failure.server(e.toString()));
-    }
+  Future<Result<TestFeature>> getTestFeature() async {
+    // Result.guard converts anything thrown by the data source (Dio errors,
+    // AppExceptions, parsing errors) into a Failure.
+    final result = await Result.guard(_remoteDataSource.getTestFeature);
+    return result.map((model) => model.toEntity());
   }
 }

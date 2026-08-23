@@ -19,27 +19,26 @@ void main() {
   });
 
   group('Failure', () {
-    test('Failure.server holds correct data', () {
-      const Failure.server('Server Failure', 404).when(
-        server: (msg, code) {
-          expect(msg, 'Server Failure');
-          expect(code, 404);
-        },
-        cache: (_, _) => fail('Should be server'),
-        network: (_) => fail('Should be server'),
-        unauthorized: (_) => fail('Should be server'),
-        notFound: (_) => fail('Should be server'),
-        validation: (_, _) => fail('Should be server'),
-        unknown: (_, _) => fail('Should be server'),
-      );
+    test('union cases are public and pattern matchable', () {
+      // Typed as the union so the switch exercises exhaustiveness over Failure.
+      // ignore: omit_local_variable_types
+      const Failure failure = Failure.server('Server Failure', 404);
+
+      final description = switch (failure) {
+        ServerFailure(:final message, :final code) => '$message/$code',
+        _ => fail('Should be server'),
+      };
+
+      expect(description, 'Server Failure/404');
+      expect(failure, const ServerFailure('Server Failure', 404));
     });
 
-    test('Failure.network holds correct data', () {
-      const failure = Failure.network('No Connection');
-      expect(failure, isA<Failure>());
+    test('message is available on every case', () {
+      expect(const Failure.network('No Connection').message, 'No Connection');
+      expect(const Failure.canceled().message, 'Request was canceled');
       expect(
-        failure.maybeWhen(network: (msg) => msg, orElse: () => null),
-        'No Connection',
+        const Failure.validation('Invalid', {'email': 'x'}).message,
+        'Invalid',
       );
     });
   });

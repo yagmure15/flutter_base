@@ -4,6 +4,7 @@ import 'src/network/interfaces/token_storage.dart';
 
 export 'src/exceptions/exceptions.dart';
 export 'src/exceptions/failure.dart';
+export 'src/exceptions/failure_mapper.dart';
 // Form Inputs
 export 'src/form_inputs/email_input.dart';
 export 'src/form_inputs/password_input.dart';
@@ -14,9 +15,7 @@ export 'src/monitoring/monitoring_service.dart';
 export 'src/network/client/api_client.dart';
 export 'src/network/interceptors/auth_interceptor.dart';
 export 'src/network/interfaces/token_storage.dart';
-export 'src/network/mixins/network_handler_mixin.dart';
-export 'src/network/models/data_result.dart';
-export 'src/network/models/network_failure.dart';
+export 'src/result/result.dart';
 // Services
 export 'src/services/connectivity_service.dart';
 export 'src/services/permission_service.dart';

@@ -1,0 +1,11 @@
+{
+  "network": "Please check your internet connection and try again.",
+  "server": "Something went wrong on our side. Please try again later.",
+  "unauthorized": "Your session has expired. Please sign in again.",
+  "forbidden": "You don't have permission to perform this action.",
+  "notFound": "The requested resource could not be found.",
+  "validation": "Please check your input and try again.",
+  "cache": "Local data could not be read. Please try again.",
+  "canceled": "The request was canceled.",
+  "unknown": "An unexpected error occurred. Please try again."
+}

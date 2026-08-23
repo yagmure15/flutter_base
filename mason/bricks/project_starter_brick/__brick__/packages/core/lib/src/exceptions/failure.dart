@@ -2,49 +2,63 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'failure.freezed.dart';
 
-/// [Failure] is the base class for all errors in the **Domain & UI Layers**.
+/// [Failure] is the single error type that flows through the **Domain & UI
+/// layers**.
 ///
-/// **Purpose:**
-/// Failures are user-friendly, safe representations of errors. Unlike Exceptions,
-/// they are clean, predictable, and do not contain stack traces or technical jargon (unless debugging).
+/// **Flow:**
+/// 1. Data sources simply throw (Dio errors, `AppException`s, parsing errors).
+/// 2. Repositories wrap calls with `Result.guard(...)`, which converts anything
+///    thrown into a [Failure] via `failureFromException`, and return `Result<T>`.
+/// 3. The UI switches on the failure to decide what to do. For user-facing text
+///    use the app-level `failure.localizedMessage` extension.
 ///
-/// **Usage:**
-/// Return `Either<Failure, Type>` from your Repositories.
-/// The UI then checks 'switches' on the failure type to decide what to show user.
-///
-/// **Example Mapping (Repository):**
+/// Union cases are public, so they can be pattern matched from any library:
 /// ```dart
-/// try {
-///   final result = await remoteDataSource.getData();
-///   return Right(result);
-/// } on ServerException catch (e) {
-///   return Left(Failure.server(e.message));
+/// switch (failure) {
+///   case UnauthorizedFailure():
+///     router.replaceAll([const LoginRoute()]);
+///   case ValidationFailure(:final errors):
+///     showInputErrors(errors);
+///   case Failure(:final message):
+///     showSnackBar(message);
 /// }
-/// ```
-///
-/// **Example Consumption (UI/Bloc):**
-/// ```dart
-/// result.fold(
-///   (failure) => failure.when(
-///     server: (msg, _) => showErrorDialog(msg),
-///     unauthorized: (msg) => navigateToLogin(),
-///     validation: (msg, errors) => showInputErrors(errors),
-///     // ... other cases
-///   ),
-///   (success) => showContent(success),
-/// );
 /// ```
 @freezed
 sealed class Failure with _$Failure {
-  const factory Failure.server(String message, [int? code]) = _ServerFailure;
-  const factory Failure.cache(String message, [int? code]) = _CacheFailure;
-  const factory Failure.network(String message) = _NetworkFailure;
-  const factory Failure.unauthorized(String message) = _UnauthorizedFailure;
-  const factory Failure.notFound(String message) = _NotFoundFailure;
+  const Failure._();
+
+  /// 5xx responses or an API error payload; [code] is the HTTP status if known.
+  const factory Failure.server(String message, [int? code]) = ServerFailure;
+
+  /// No connectivity, DNS or timeout problems.
+  const factory Failure.network(String message) = NetworkFailure;
+
+  /// 401 - the session is missing or expired.
+  const factory Failure.unauthorized(String message) = UnauthorizedFailure;
+
+  /// 403 - authenticated but not allowed.
+  const factory Failure.forbidden(String message) = ForbiddenFailure;
+
+  /// 404 - the resource does not exist.
+  const factory Failure.notFound(String message) = NotFoundFailure;
+
+  /// 400/422 - [errors] carries field-level messages from the backend, if any.
   const factory Failure.validation(
     String message, [
     Map<String, dynamic>? errors,
-  ]) = _ValidationFailure;
-  const factory Failure.unknown(String message, [dynamic error]) =
-      _UnknownFailure;
+  ]) = ValidationFailure;
+
+  /// Local storage / cache problems.
+  const factory Failure.cache(String message, [int? code]) = CacheFailure;
+
+  /// The request was canceled (e.g. through a `CancelToken`); usually safe to
+  /// ignore in the UI.
+  const factory Failure.canceled([
+    @Default('Request was canceled') String message,
+  ]) = CanceledFailure;
+
+  /// Anything that could not be classified; [error] keeps the original object
+  /// for logging / crash reporting.
+  const factory Failure.unknown(String message, [Object? error]) =
+      UnknownFailure;
 }

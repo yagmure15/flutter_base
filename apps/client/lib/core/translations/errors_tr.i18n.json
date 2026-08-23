@@ -1,0 +1,11 @@
+{
+  "network": "İnternet bağlantınızı kontrol edip tekrar deneyin.",
+  "server": "Sunucu tarafında bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
+  "unauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+  "forbidden": "Bu işlem için yetkiniz yok.",
+  "notFound": "İstenen kaynak bulunamadı.",
+  "validation": "Lütfen girdiğiniz bilgileri kontrol edin.",
+  "cache": "Yerel veriler okunamadı. Lütfen tekrar deneyin.",
+  "canceled": "İstek iptal edildi.",
+  "unknown": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
+}

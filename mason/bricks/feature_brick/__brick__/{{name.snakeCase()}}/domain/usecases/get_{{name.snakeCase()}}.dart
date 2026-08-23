@@ -1,6 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_base_core/flutter_base_core.dart';
 import 'package:injectable/injectable.dart';
+
 import '../entities/{{name.snakeCase()}}.dart';
 import '../repositories/{{name.snakeCase()}}_repository.dart';
 
@@ -10,7 +10,7 @@ class Get{{name.pascalCase()}} {
 
   final {{name.pascalCase()}}Repository _repository;
 
-  Future<Either<Failure, {{name.pascalCase()}}>> call() {
+  Future<Result<{{name.pascalCase()}}>> call() {
     return _repository.get{{name.pascalCase()}}();
   }
 }

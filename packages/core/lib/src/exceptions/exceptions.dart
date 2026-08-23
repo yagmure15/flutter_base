@@ -8,7 +8,8 @@ import '../../flutter_base_core.dart';
 ///
 /// **Usage:**
 /// Throw these exceptions in your RemoteDataSource or LocalDataSource implementation.
-/// They will be caught by the Repository and converted into a [Failure] object.
+/// Repositories wrap calls with `Result.guard(...)`, which converts them (and
+/// Dio errors) into a [Failure] through `failureFromException`.
 ///
 /// **Example:**
 /// ```dart

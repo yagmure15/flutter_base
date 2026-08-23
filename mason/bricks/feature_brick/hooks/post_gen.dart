@@ -87,21 +87,28 @@ void _registerRoute({
   }
 
   if (!alreadyImported) {
-    // Keep relative imports grouped: insert after the last relative import,
-    // otherwise after the last import of any kind.
-    var index = lines.lastIndexWhere(
-      (l) => l.startsWith("import '../") || l.startsWith("import './"),
-    );
-    if (index == -1) {
-      index = lines.lastIndexWhere((l) => l.startsWith('import '));
-    }
-    if (index == -1) {
-      context.logger.warn(
-        'No import section found in app_router.dart; add manually: '
-        '$importLine',
-      );
+    // Keep relative imports grouped and sorted (directives_ordering lint):
+    // insert into the relative-import block and re-sort it.
+    bool isRelative(String l) =>
+        l.startsWith("import '../") || l.startsWith("import './");
+    final first = lines.indexWhere(isRelative);
+    if (first != -1) {
+      var last = first;
+      while (last + 1 < lines.length && isRelative(lines[last + 1])) {
+        last++;
+      }
+      final block = [...lines.sublist(first, last + 1), importLine]..sort();
+      lines.replaceRange(first, last + 1, block);
     } else {
-      lines.insert(index + 1, importLine);
+      final lastImport = lines.lastIndexWhere((l) => l.startsWith('import '));
+      if (lastImport == -1) {
+        context.logger.warn(
+          'No import section found in app_router.dart; add manually: '
+          '$importLine',
+        );
+      } else {
+        lines.insertAll(lastImport + 1, ['', importLine]);
+      }
     }
   }
 

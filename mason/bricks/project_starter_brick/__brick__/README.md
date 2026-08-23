@@ -118,6 +118,38 @@ final hasConnection = await getIt<ConnectivityService>().hasConnection;
 final granted = await getIt<PermissionService>().requestPermission(Permission.camera);
 ```
 
+### 4. Hata Yönetimi (`Result` / `Failure`)
+
+Tek bir hata modeli vardır; `dartz`/`Either` kullanılmaz.
+
+- **Data source**'lar sadece fırlatır (Dio hataları, `ServerException` gibi `AppException`'lar, parse hataları).
+- **Repository**'ler çağrıyı `Result.guard(...)` ile sarar; fırlatılan her şey `failureFromException` ile tek yerde
+  `Failure`'a çevrilir (401 → `UnauthorizedFailure`, 422 → `ValidationFailure(errors)`, timeout → `NetworkFailure` ...).
+- **Use case / Cubit** `Result<T>` alır ve `switch` ile dallanır; state `Failure`'ın kendisini taşır.
+- **UI** metni `failure.localizedMessage` (slang `errors` namespace'i) ile gösterir.
+
+```dart
+// Repository
+Future<Result<User>> getUser() async {
+  final result = await Result.guard(_remote.getUser);   // Future<UserModel>
+  return result.map((model) => model.toEntity());
+}
+
+// Cubit
+switch (await _getUser()) {
+  case Success(:final data):       emit(UserState.loaded(data));
+  case FailureResult(:final failure): emit(UserState.error(failure));
+}
+
+// UI
+error: (failure) => Text(failure.localizedMessage),
+
+// Belirli bir hataya tepki vermek için (public union sınıfları):
+if (failure case UnauthorizedFailure()) context.router.replaceAll([const LoginRoute()]);
+```
+
+`Result` yardımcıları: `fold`, `map`, `flatMap`, `dataOrNull`, `failureOrNull`, `isSuccess`/`isFailure`.
+
 ---
 
 ## 🛠 Geliştirme Araçları ve Komutlar

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:{{name.snakeCase()}}_core/{{name.snakeCase()}}_core.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,7 +10,7 @@ class GetTestFeature {
 
   final TestFeatureRepository _repository;
 
-  Future<Either<Failure, TestFeature>> call() {
+  Future<Result<TestFeature>> call() {
     return _repository.getTestFeature();
   }
 }

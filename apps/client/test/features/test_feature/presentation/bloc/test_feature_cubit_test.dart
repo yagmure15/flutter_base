@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_base/features/test_feature/domain/entities/test_feature.dart';
 import 'package:flutter_base/features/test_feature/domain/usecases/get_test_feature.dart';
 import 'package:flutter_base/features/test_feature/presentation/bloc/test_feature_cubit.dart';
@@ -27,8 +26,9 @@ void main() {
     blocTest<TestFeatureCubit, TestFeatureState>(
       'emits [loading, success] when the use case succeeds',
       build: () {
-        when(() => getTestFeature())
-            .thenAnswer((_) async => const Right(TestFeature(id: '1')));
+        when(
+          () => getTestFeature(),
+        ).thenAnswer((_) async => const Result.success(TestFeature(id: '1')));
         return TestFeatureCubit(getTestFeature);
       },
       act: (cubit) => cubit.started(),
@@ -40,16 +40,17 @@ void main() {
     );
 
     blocTest<TestFeatureCubit, TestFeatureState>(
-      'emits [loading, error] when the use case fails',
+      'emits [loading, error] with the failure when the use case fails',
       build: () {
-        when(() => getTestFeature())
-            .thenAnswer((_) async => const Left(Failure.server('boom', 500)));
+        when(() => getTestFeature()).thenAnswer(
+          (_) async => const Result.failure(Failure.server('boom', 500)),
+        );
         return TestFeatureCubit(getTestFeature);
       },
       act: (cubit) => cubit.started(),
-      expect: () => [
-        const TestFeatureState.loading(),
-        TestFeatureState.error(const Failure.server('boom', 500).toString()),
+      expect: () => const [
+        TestFeatureState.loading(),
+        TestFeatureState.error(Failure.server('boom', 500)),
       ],
     );
   });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/dependency/di.dart';
+import '../../../../core/error/failure_localizer.dart';
 import '../bloc/test_feature_cubit.dart';
 
 @RoutePage()
@@ -21,7 +22,7 @@ class TestFeaturePage extends StatelessWidget {
               initial: () => const SizedBox.shrink(),
               loading: () => const Center(child: CircularProgressIndicator()),
               success: (data) => Center(child: Text('Data: ${data.id}')),
-              error: (msg) => Center(child: Text('Error: $msg')),
+              error: (failure) => Center(child: Text(failure.localizedMessage)),
             );
           },
         ),
